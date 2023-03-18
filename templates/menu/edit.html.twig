@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Menu{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <a href="{{ path('app_MenuS') }}"><p class="retour";> < retour <p> </a>
+            <h1 class="text-center">{% if mode == 'new' %}Ajouter{% else %}Modification{% endif %} - Menu</h1>
+        </div>
+    </div>
+
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-6 col-md-offset-3">
+            {{ form_start(form, {'method': 'POST', 'attr': {'novalidate': 'novalidate' }} ) }}
+
+            <div class="form-group  ">
+                {{ form_label(form.titre, 'Titre', {'label_attr': {'class': 'font '}}) }}
+                {{ form_widget(form.titre, { 'attr': {'class': 'form-control'} }) }}
+                {{ form_errors(form.titre) }}
+            </div>
+
+            {% if not form.vars.valid %}
+                <div class="alert alert-danger">
+                    Le formulaire contient des erreurs. Veuillez vérifier les informations saisies.
+                </div>
+            {% endif %}
+
+            <div class="form-group text-center">
+            {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary btn-lg btn-block', 'style': 'background-color: #b18914; color: #ffffff; border-color: #b18914;'}}) }}
+
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+<style>
+h1{
+    font-family: Bodoni, serif;
+    letter-spacing: 0.05em;
+    font-size: 2.5em;
+    font-style: italic;
+    color: #cd9700;
+    text-align:center;
+}
+.container{
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #F9F9FA;
+    color: #413C49;
+    margin-top: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+    
+}
+.font{
+margin-right:18em;
+font-size: 20px;
+margin-top:20px;
+display: inline-block;
+}
+.form-group {
+    text-align: center;
+    margin: 0 auto;
+    max-width: 400px;
+    
+}
+.retour{
+    color: #6b6b6b;
+    
+}
+.form-control {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.btn-lg{
+            color: #fff;
+            margin: auto;
+            margin-top: 30px;
+        }
+</style>
+{% endblock %}

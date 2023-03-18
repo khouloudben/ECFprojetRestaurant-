@@ -1,0 +1,94 @@
+{{ form_start(form) }}
+    <div class="row justify-content-center align-items-center">
+        <div class="form-group  ">
+        {# {{ form_label(form.name, 'Nom', {'label_attr': {'class': 'font ' }}
+        ) }}
+                        
+        {{ form_widget(form.name, { 'attr': {'class': 'form-control'} }) }} #}
+
+        {{ form_label(form.imageName, "Nom de l'image", {'label_attr': {'class': 'font ' }}
+        ) }}
+                        
+        {{ form_widget(form.imageName, { 'attr': {'class': 'form-control'} }) }}
+
+        {{ form_label(form.imageFile, "Fichier d'image", {'label_attr': {'class': 'font ' }}
+        ) }}
+                        
+        {{ form_widget(form.imageFile, { 'attr': {'class': 'form-control'} }) }}
+
+        {{ form_label(form.updatedAt, 'Date de mise à jour ', {'label_attr': {'class': 'font ' }}
+        ) }}
+                        
+        {{ form_widget(form.updatedAt, { 'attr': {'class': 'form-control'} }) }}
+
+        {{ form_label(form.createdAt, 'Date de création', {'label_attr': {'class': 'font ' }}
+        ) }}
+                        
+        {{ form_widget(form.createdAt, { 'attr': {'class': 'form-control'} }) }}
+
+        {{ form_label(form.plat, 'Description', {'label_attr': {'class': 'font ' }}
+        ) }}
+                        
+        {{ form_widget(form.plat, { 'attr': {'class': 'form-control'} }) }}
+
+        </div>
+        </div>
+        {{ form_errors(form) }}
+        {# {{ form_widget(form) }} #}
+        <div class="form-group text-center">
+                <button class=" button btn btn-info btn-lg btn-block">
+                    {{ button_label|default('Sauvegarder') }}
+                </button>
+            </div>
+            {{ form_end(form) }}
+<style>
+    h1{
+    font-family: Bodoni, serif;
+    letter-spacing: 0.05em;
+    font-size: 2.5em;
+    font-style: italic;
+    color: #cd9700;
+    /* margin-left:6em; */
+    text-align:center;
+    /* margin-bottom:-3em;; */
+    
+    
+    ;
+}
+    .container{
+    border:none;
+    border-radius: none;
+    background-color: #F9F9FA;
+    color: #413C49;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 30px;
+
+    
+}
+    .form-group {
+    margin: 0 auto;
+    max-width: 400px;
+    
+}
+.required{
+        font-size: 30px;
+    }
+    .font{
+margin-right:10em;
+font-size: 17px;
+margin-top:20px;
+display: inline-block;
+}
+.btn-lg{
+color: #fff;
+margin-top: 30px;
+}
+.button.btn-info{
+    background-color: #b18914;
+     color: #ffffff; 
+     border-color: #b18914; 
+     margin-top:10px; 
+     margin-bottom:20px;   
+}
+</style>

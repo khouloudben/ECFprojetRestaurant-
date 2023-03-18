@@ -1,0 +1,233 @@
+{# {% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+{% block content %} 
+    <div class="container-center">
+        <h1>Inscription</h1>
+        {{ form_start(registrationForm, {'attr': {'class': 'row'}}) }}
+
+            <div class="input-field col s12 m6 l6 offset-m3 offset-l3">
+                <label for = 'nom'>Nom</label>
+                {{ form_widget(registrationForm.nom, {'attr': {'placeholder': 'Saisissez votre nom'}}) }}
+                <span class="error">{{ form_errors(registrationForm.nom) }}</span>
+            </div>
+
+            <div class="input-field col s12 m6 l6 offset-m3 offset-l3">
+                <label for = 'prenom'>Prénom</label>
+                {{ form_widget(registrationForm.prenom, {'attr': {'placeholder': 'Saisissez votre prénom'}}) }}
+                <span class="error">{{ form_errors(registrationForm.prenom) }}</span>
+            </div>
+
+            <div class="input-field col s12 m6 l6 offset-m3 offset-l3">
+                <label for = 'numtel'>Numéro de téléphone</label>
+                {{ form_widget(registrationForm.numtel, {'attr': {'placeholder': 'Saisissez votre Numéro de téléphone'}}) }}
+                <span class="error">{{ form_errors(registrationForm.numtel) }}</span>
+            </div>
+            
+            <div class="input-field col s12 m6 l6 offset-m3 offset-l3">
+                <label for = 'adresse'>Adresse</label>
+                {{ form_widget(registrationForm.adresse, {'attr': {'placeholder': 'Saisissez votre Adresse'}}) }}
+                <span class="error">{{ form_errors(registrationForm.adresse) }}</span>
+            </div>
+
+            <div class="input-field col s12 m6 l6 offset-m3 offset-l3">
+                <label for = 'password'>Mot de passe</label>
+                {{ form_widget(registrationForm.password, {'attr': {'placeholder': 'Saisissez votre mot de passe'}}) }}
+                <span class="error">{{ form_errors(registrationForm.password) }}</span>
+            </div>
+            <label for = 'confirmpassword'>Vérifier Mot de passe</label>
+                {{ form_widget(registrationForm.confirmpassword, {'attr': {'placeholder': 'Vérifier votre mot de passe'},'label_attr': {'class': 'label-class'}}) }}
+                <span class="error">{{ form_errors(registrationForm.confirmpassword) }}</span>
+            <div class="input-field col s12">
+                <input type="submit" name="" class="btn btn-primary" value="Inscription">
+            </div>
+            
+            <div class="input-field col s12 m6 l6 offset-m3 offset-l3">
+                <label for = 'allergie'>Vos allergies</label>
+                {{ form_widget(registrationForm.allergie, {'attr': {'placeholder': ''}}) }}
+                <span class="error">{{ form_errors(registrationForm.allergie) }}</span>
+            </div>
+        {{ form_end(registrationForm) }}
+    </div>
+
+<style>
+.container-center {
+    font-family: Calibri, serif;
+    }
+
+    .container-center{
+        max-width: 50%;
+    }
+
+    form label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .container-center {
+        border: 1px solid lightgray;
+        background-color: rgba( 225, 233, 255, 0.25 );
+    }
+
+    h1 {
+        font-style: italic;
+        font-size: 1.1em;
+        padding: 5px;
+        font-family:centre;
+    }
+
+    form  div {
+        display: inline-block;
+        margin-bottom: 10px;
+        padding: 10px;
+        width: 80%;
+    }
+
+    /* button[ type = submit ] {
+        padding: 10px;
+        margin-top: 15px;
+        width: auto;
+    }
+
+    .help-text {
+        color: #2b2b2b;
+        font-size: 12px;
+    } */
+    </style>
+    {% endblock %} 
+#}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+{% block content %} 
+    {# <img class="img" src="uploads/logofinal.png" alt="logo">  #}
+    <div class="container">
+        {{ form_start(registrationForm, {'attr': {'class': 'row'}}) }}
+
+        <fieldset>
+            <legend>Création de votre compte</legend>
+            <p>
+                <label for = 'nom'>Nom</label>
+                {{ form_widget(registrationForm.nom, {'attr': {'placeholder': 'Saisissez votre nom'}}) }}
+            <span class="error">{{ form_errors(registrationForm.nom) }}</span>
+            </p>
+
+            <p>
+                <label for = 'prenom'>Prénom</label>
+                {{ form_widget(registrationForm.prenom, {'attr': {'placeholder': 'Saisissez votre prénom'}}) }}
+                <span class="error">{{ form_errors(registrationForm.prenom) }}</span>
+            </p>
+
+            <p>
+                <label for = 'numtel'>Numéro de téléphone</label>
+                {{ form_widget(registrationForm.numtel, {'attr': {'placeholder': 'Saisissez votre Numéro de téléphone'}}) }}
+                <span class="error">{{ form_errors(registrationForm.numtel) }}</span>
+            </p>
+
+            <p>
+                <label for = 'adresse'>Adresse</label>
+                {{ form_widget(registrationForm.adresse, {'attr': {'placeholder': 'Saisissez votre Adresse'}}) }}
+                <span class="error">{{ form_errors(registrationForm.adresse) }}</span>
+            </p>
+
+            <p>
+                <label for = 'email'>E-mail</label>
+                {{ form_widget(registrationForm.email, {'attr': {'placeholder': 'Saisissez votre email'}}) }}
+                <span class="error">{{ form_errors(registrationForm.email) }}</span>
+            </p>
+
+            <p>
+                <label for = 'password'>Mot de passe (8 caractères minimum)</label>
+                {{ form_widget(registrationForm.password) }}
+                <span class="error">{{ form_errors(registrationForm.password) }}</span>
+            </p>
+
+            <p>
+                <label for = 'confirmpassword'>Vérifier Mot de passe</label>
+                {{ form_widget(registrationForm.confirmpassword) }}
+                <span class="error">{{ form_errors(registrationForm.confirmpassword) }}</span>
+            </p>
+
+            <p>
+                <label for = 'allergie'>Vos allergies</label>
+            <textarea {{ form_widget(registrationForm.allergie, {'attr': {'cols': '30', 'rows': '10'}}) }} </textarea>
+                <span class="error">{{ form_errors(registrationForm.allergie) }}</span>
+            </p>
+
+            <br>
+
+            {# <button type='submit'>S'inscrire</button> #}
+
+        <div class="container">
+                <button type = 'submit'class="btn btn-primary"style="background-color: #b18914; color: #ffffff; border-color:  #b18914;">S'inscrire</button>
+        </div>
+        </fieldset>   
+        {{ form_end(registrationForm) }}
+    </div>
+</div>
+    <style>
+    .container {
+    font-family: Calibri, serif;
+    max-width: 50%;
+    margin-bottom:20px;
+    }
+    .form-group {
+    text-align: center;
+    
+}
+    form label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    
+    fieldset {
+    border: 1px solid lightgray;
+    background-color: rgba( 225, 233, 255, 0.25 );
+    
+    }
+    p{
+        margin-left: 70px;
+    }
+
+    legend {
+        font-style: italic;
+        font-size: 2.1em;
+        padding: 5px;
+        font-family:centre;
+        color:#b18914;
+    }
+    .img{
+    margin-left: 900px;    
+    }
+
+    form input,form textarea,p {
+        display: inline-block;
+        margin-bottom: 5px;
+        padding: 5px;
+        width: 90%;
+    }
+    label{
+        color:#ffffff;
+    }
+    .container {
+    display: flex;
+    justify-content: center;
+}
+    button[ type = submit ] {
+        width: 200px;
+        font-family:center;
+        margin-bottom:10px;
+    }  
+    body {
+background-image: url("uploads/image1.png");
+background-repeat: no-repeat;
+background-size: cover;
+
+}
+    
+    </style>
+{% endblock %}
+

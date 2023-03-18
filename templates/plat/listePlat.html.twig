@@ -1,0 +1,162 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    Hello AccueilController!
+{% endblock %}
+{% block content %}
+
+    <div class="container-fluid">
+        {# Titre de la page #}
+        <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+            </h1>
+        </div>
+    </div>
+    {% if is_granted('ROLE_ADMIN') %}
+    <div class="row alert alert-warning" role="alert">
+        <div class="col-xs-9 col-sm-10"></div>
+        <div class="col-xs-3 col-sm-2">
+            <a href="{{ path('plat_edit') }}" role="button" class="btn btn-info text-right"style="background-color: #b18914; color: #ffffff; border-color:  #b18914;">
+                <i class="fa fa-plus fa-fw"></i>
+                + Ajouter un plat             
+            </a>
+        </div>
+    </div>
+{% endif %}
+        
+        <div class="container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            <h2>
+                                LES PLATS                          
+                            </h2>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for plat in plats %}
+                        <tr>
+                            <td>
+                                <li class="majuscule">
+                                    {{ plat.titre }}
+                                    <br></li>
+                                    <li class="Description">
+                                        {{ plat.description|nl2br }}
+                                    </li>
+                                    <li class="prix" >
+                                        {{ plat.prix }}
+                                    <span> €</span>
+                                    </li>
+                                </li>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% if is_granted('ROLE_ADMIN') %}
+        <div class="container">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            Id
+                        </th>
+                        <th scope="col">
+                            Catégoriser
+                        </th>
+                        <th scope="col">
+                            Titre
+                        </th>
+                        <th scope="col">
+                            Description
+                        </th>
+                        <th scope="col">
+                        Prix
+                        </th>
+                        <th scope="col">{# Bouton d'action - Supprimer #}</th>                                                                                                                                                                                        <th scope="col">{# Bouton d'action - Modifier #}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for plat in plats %}
+                        <tr>
+                            <th scope="row">
+                                {{ plat.id }}
+                            </th>
+                            <td>
+                                {{ plat.categoriserLesPlats }}
+                            </td>
+                            <td>
+                                {{ plat.titre }}
+                            </td>
+                            <td>
+                                {{ plat.description|nl2br }}
+                            </td>
+                            <td>
+                                {{ plat.prix }}
+                            
+                            </td>
+                            <td>
+                                <a href="{{ path('remove_plat', {'id': plat.id}) }}" role="button" class="btn btn-danger">
+                                    Supprimer
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ path('plat_edit', {'id': plat.id}) }}" role="button" class="btn btn-info"style="background-color: #b18914; color: #ffffff; border-color:  #b18914;">
+                                    Modifier
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+
+    {% endblock %}
+    {% block stylesheets %}
+
+<style>
+.table{
+background-color:#f5f5f5;
+}
+h2{
+    font-family: Bodoni, serif;
+    letter-spacing: .05em;
+    font-size: 2em;
+    margin-bottom: 1em;
+    font-style: italic;
+    color: #cd9700;
+    font-weight: 400;
+    text-align: center;
+    
+    ;
+}
+.Description {
+text-align: center;
+color: #6b6b6b;
+text-transform: lowercase;
+}
+.prix{
+
+text-align: center;
+
+}
+li{   
+    text-align: center;
+    display: block;
+    color: #cd9700;
+    }
+.majuscule {   
+    text-transform: uppercase;
+    font-style: italic;
+    font-family: Bodoni, serif;
+    letter-spacing: .05em;
+    font-size: 1.2em;
+}
+</style>
+    {% endblock %}
+    

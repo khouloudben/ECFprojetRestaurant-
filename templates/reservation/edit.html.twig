@@ -1,0 +1,113 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    Reservation
+    
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('app_pageReservation') }}">
+            {% else %}
+                <a href="{{ path('app_pageReservationUser') }}">
+            {% endif %}
+                    <p class="retour";> < retour <p> </a>
+                    <h1 class="text-center">
+                        {% if mode == 'new' %}Ajouter{% else %}Modification{% endif %} - Une réservation</h1>
+                </div>
+            </div>
+            <div class="row justify-content-center align-items-center">
+                <div class="col-md-6 col-md-offset-3">
+                    {{ form_start(form, {'method': 'POST', 'attr': {'novalidate': 'novalidate' }}) }}
+
+                    <div class="form-group">
+                        {# {{ include('helpers/form/_group.html.twig', {
+                        'field': form['nombreCouvert']
+                    }) }} #}
+                    {{ form_label(form.nombreCouvert, 'Un nombre de personnes', {'label_attr': {'class': 'font '}}) }}
+                    {{ form_widget(form.nombreCouvert, { 'attr': {'class': 'form-control'} }) }}
+                    {{ form_errors(form.nombreCouvert) }}
+                        {# {{ include('helpers/form/_group.html.twig', {
+                        'field': form['date']
+                    }) }} #}
+                    {{ form_label(form.date, 'Date', {'label_attr': {'class': 'font '}}) }}
+                    {{ form_widget(form.date, { 'attr': {'class': 'form-control'} }) }}
+                    {{ form_errors(form.date) }}
+                
+                        {# {{ include('helpers/form/_group.html.twig', {
+                        'field': form['heure']
+                    }) }} #}
+                    
+                {{ form_label(form.heure, 'Heure', {'label_attr': {'class': 'font '}}) }}
+                {{ form_widget(form.heure, { 'attr': {'class': 'form-control'} }) }}
+                {{ form_errors(form.heure) }}
+
+                        {# {{ include('helpers/form/_group.html.twig', {
+                        'field': form['allergie']
+                    }) }} #}
+                    {{ form_label(form.allergie, 'Allergie', {'label_attr': {'class': 'font '}}) }}
+                {{ form_widget(form.allergie, { 'attr': {'class': 'form-control'} }) }}
+                {{ form_errors(form.allergie) }}
+
+            </div>
+                    {% if not form.vars.valid %}
+                        <div class="alert alert-danger">
+                            Le formulaire contient des erreurs. Vérifiez les différentes rubriques.                  
+                        </div>
+                    {% endif %}
+                    <div class="form-group text-center">
+                        {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-info btn-lg btn-block', 'style': 'background-color: #b18914; color: #ffffff; border-color: #b18914; margin-top:10px; margin-bottom:20px;'} }) }}
+                    </div>
+                    {# {{ form_widget(form) }} #}
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+        <style>
+    h1{
+        font-family: Bodoni, serif;
+    letter-spacing: 0.05em;
+    font-size: 2.5em;
+    font-style: italic;
+    color: #cd9700;
+    text-align:center;
+}
+        .container{
+            max-width: 800px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #F9F9FA;
+            color: #413C49;
+            margin-top: 20px;
+            padding-bottom: 13px;
+            margin-bottom: 20px;
+        }
+
+.font{
+margin-right:10em;
+font-size: 17px;
+margin-top:20px;
+display: inline-block;
+}
+.retour{
+    color: #6b6b6b;
+}
+.form-group {
+    margin: 0 auto;
+    max-width: 400px;
+    
+}
+/* .form-control {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+} */
+.btn-lg{
+    color: #fff;
+    margin-top: 30px;
+}
+
+    </style>
+    {% endblock %}
+    

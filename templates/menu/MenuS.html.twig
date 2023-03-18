@@ -1,0 +1,122 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AccueilController!{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+        {# Titre de la page #}
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header"></h1>
+            </div>
+        </div>
+        {% if is_granted('ROLE_ADMIN') %}
+
+        <div class="row alert alert-warning" role="alert">
+            <div class="col-xs-9 col-sm-10"></div>
+
+            <div class="col-xs-3 col-sm-2">
+                <a href="{{ path('menu_edit') }}" role="button" class="btn btn-info text-right"style="background-color: #b18914; color: #ffffff; border-color:  #b18914;">
+                    <i class="fa fa-plus fa-fw"></i> + Ajouter un menu
+                </a>
+            
+            </div>
+        </div>
+        </div>
+    {% endif %}
+        <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"><h2>NOS MENUS<h2</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for menu in menus %} 
+                <tr>
+                    <td>
+                    <li class="majuscule">
+                        {{ menu.titre}}
+                    </li>
+                    </td>
+                </tr> 
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+
+    {% if is_granted('ROLE_ADMIN') %}
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Titre</th>
+                    <th scope="col">{# Bouton d'action - Supprimer #}</th>
+                    <th scope="col">{# Bouton d'action - Modifier #}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for menu in menus %} 
+                <tr>
+                    <th scope="row">
+                        {{ menu.id }}
+                    </th>
+                    <td>
+                        {{ menu.titre}}
+                    </td>
+                    <td>
+                        <a href="{{ path('remove_menu', {'id': menu.id}) }}" role="button" class="btn btn-danger">Supprimer</a>
+                    </td>
+                    <td>
+                    <a href="{{ path('menu_edit', {'id': menu.id}) }}" role="button" class="btn btn-info"style="background-color: #b18914; color: #ffffff; border-color:  #b18914;">Modifier</a>
+                    </td>
+                </tr> 
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}
+
+
+
+
+{% endblock %}
+
+{% block stylesheets %}
+
+
+<style>
+.table{
+    background-color:#f5f5f5;
+    }
+h2{
+    font-family: Bodoni, serif;
+    letter-spacing: .05em;
+    font-size: 2em;
+    margin-bottom: 1em;
+    font-style: italic;
+    color: #cd9700;
+    font-weight: 400;
+    text-align: center
+    
+    ;
+}
+li{   
+    display: block;
+    text-align: center;
+    color: #cd9700;
+    }
+.majuscule {   
+    text-transform: uppercase;
+    font-style: italic;
+    font-family: Bodoni, serif;
+    letter-spacing: .05em;
+    font-size: 1.2em;
+}
+
+
+
+</style>
+{% endblock %}
