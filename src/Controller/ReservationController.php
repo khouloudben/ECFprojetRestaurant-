@@ -107,7 +107,7 @@ public function pageReservation(ManagerRegistry $doctrine,ReservationRepository 
             'mode'      => $mode
         );
 
-    return $this->render('reservation/pageReservation.html.twig', $parameters);
+    return $this->render('reservation/edit.html.twig', $parameters);
     }
 
 
