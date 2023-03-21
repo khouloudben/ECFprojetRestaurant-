@@ -107,45 +107,9 @@ $user=$this->getUser();
             'mode'      => $mode
         );
 
-    return $this->render('reservation/edit.html.twig', $parameters);
+    return $this->render('reservation/index.html.twig', $parameters);
     }
 
-    // #[Route('/reservation_editUser/{id}', name: 'reservation_editUser')]
-    // public function editUser(ManagerRegistry $doctrine,ReservationRepository $reservationRepository,Request $request, int $id=null): Response
-    // {
-    // // Entity Manager de Symfony
-    // $entityManager = $doctrine->getManager();
-    // $reservationRepository = $entityManager->getRepository(Reservation::class);
-    // // Si un identifiant est présent dans l'url alors il s'agit d'une modification
-    // // Dans le cas contraire il s'agit d'une création dune reservation
-    // if($id) {
-    //     $mode = 'update';
-    //     // On récupère la reservation qui correspond à l'id passé dans l'url
-    //     $reservation = $reservationRepository->findBy(['id' => $id])[0];
-    // }
-    // else {
-    //     $mode       = 'new';
-    //     $reservation   = new Reservation();
-    // }
-
-    // // $categories =  $entityManager->getRepository(Category::class)->findAll();
-    // $form = $this->createForm(ReservationType::class, $reservation);
-    // $form->handleRequest($request);
-
-    // if($form->isSubmitted() && $form->isValid()) {
-    // $this->saveReservation($reservation,$doctrine, $mode,);
-
-    // return $this->redirectToRoute('app_pageReservation', array('id' => $reservation->getId()));
-    // }
-
-    // $parameters = array(
-    //         'form'      => $form->createView(),
-    //         'reservation'   => $reservation,
-    //         'mode'      => $mode
-    //     );
-
-    // return $this->render('reservation/editUser.html.twig', $parameters);
-    // }
 
 
     #[Route('/save_reservation/{id}', name: 'save_reservation')]
@@ -178,16 +142,6 @@ $user=$this->getUser();
 
         return $this->redirectToRoute('app_pageReservation');
     }
-    // public function id(ManagerRegistry $doctrine): Response
-    // {
-    //     $entityManager = $doctrine->getManager();
-    //     $user = $this->getUser();
-    //     $reservations = $entityManager->getRepository(Reservation::class)->findBy(['utilisateur' => $user]);
-    
-    //     return $this->render('reservation/index.html.twig', [
-    //         'reservations' => $reservations,
-    //     ]);
-    // }
     
     
 }
