@@ -107,7 +107,7 @@ $user=$this->getUser();
             'mode'      => $mode
         );
 
-    return $this->render('reservation/index.html.twig', $parameters);
+    return $this->render('reservation/edit.html.twig', $parameters);
     }
 
 
