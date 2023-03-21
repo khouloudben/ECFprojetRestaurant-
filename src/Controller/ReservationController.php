@@ -97,7 +97,7 @@ $user=$this->getUser();
     if($form->isSubmitted() && $form->isValid()) {
     $this->saveReservation($reservation,$doctrine, $mode,);
 
-    return $this->redirectToRoute('app_pageReservationUser', array('id' => $reservation->getId()));
+    return $this->redirectToRoute('app_pageReservation', array('id' => $reservation->getId()));
     
     }
 
