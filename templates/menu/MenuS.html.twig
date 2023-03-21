@@ -51,17 +51,18 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Id</th>
+                    <th scope="col">N°</th>
                     <th scope="col">Titre</th>
                     <th scope="col">{# Bouton d'action - Supprimer #}</th>
                     <th scope="col">{# Bouton d'action - Modifier #}</th>
                 </tr>
             </thead>
             <tbody>
-                {% for menu in menus %} 
+                {% set z = 1 %}
+                {%for menu in menus %} 
                 <tr>
                     <th scope="row">
-                        {{ menu.id }}
+                   {{z}}
                     </th>
                     <td>
                         {{ menu.titre}}
@@ -72,6 +73,7 @@
                     <td>
                     <a href="{{ path('menu_edit', {'id': menu.id}) }}" role="button" class="btn btn-info"style="background-color: #b18914; color: #ffffff; border-color:  #b18914;">Modifier</a>
                     </td>
+                    {% set z = z + 1 %}
                 </tr> 
                 {% endfor %}
             </tbody>

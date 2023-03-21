@@ -63,7 +63,7 @@
                 <thead>
                     <tr>
                         <th scope="col">
-                            Id
+                        N°
                         </th>
                         <th scope="col">
                             Catégoriser
@@ -81,10 +81,11 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% set z = 1 %}
                     {% for plat in plats %}
                         <tr>
                             <th scope="row">
-                                {{ plat.id }}
+                            {{z}}
                             </th>
                             <td>
                                 {{ plat.categoriserLesPlats }}
@@ -109,6 +110,7 @@
                                     Modifier
                                 </a>
                             </td>
+                            {% set z = z + 1 %}
                         </tr>
                     {% endfor %}
                 </tbody>

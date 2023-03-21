@@ -5,8 +5,8 @@
 {% block content %}
 
 <div>
-{# <img class="logo" src="uploads/logofinal.png" alt="logo">  #}
-<img class="img" src="uploads/imageacceuil.png" alt="logo" width="100%"  height="100%" >  
+
+<img class="img" src="uploads/imglavuedor.png" alt="logo" width="97%"  height="45%" >  
 </div>
 
 <img class="imgmanu" src="uploads/menu.png" alt="logo" width="10%"  height="10%" >  
@@ -18,7 +18,7 @@
 </P>
 
 {% for image in images %}
-<img class="imagePlat" src="{{ vich_uploader_asset(image, 'imageFile') }}"  width="280" height="380" alt="{{ image.imageName }}">
+<img id="img_list" class="imagePlat" src="{{ vich_uploader_asset(image, 'imageFile') }}"  width="280" height="380" alt="{{ image.imageName }}">
 {% endfor %}
 <a href="{{ path('reservation_edit') }}"role="button" class="btn btn-info text-right"style="background-color: #b18914; color: #ffffff; border-color:  #b18914; width: 170px;margin-top:3em;margin-bottom:3em;margin-left:45%;text-align: center;">Réservez votre table</a>
 
@@ -40,6 +40,10 @@ transform: translate(-50%, -50%);
 .imgmanu{
     margin-top:4em;
     margin-left:45%;
+}
+.img{
+margin-left:1.5em;
+margin-top:1.5em;
 }
 </style>
 

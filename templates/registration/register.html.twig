@@ -1,108 +1,7 @@
-{# {% extends 'base.html.twig' %}
-
-{% block title %}Inscription{% endblock %}
-{% block content %} 
-    <div class="container-center">
-        <h1>Inscription</h1>
-        {{ form_start(registrationForm, {'attr': {'class': 'row'}}) }}
-
-            <div class="input-field col s12 m6 l6 offset-m3 offset-l3">
-                <label for = 'nom'>Nom</label>
-                {{ form_widget(registrationForm.nom, {'attr': {'placeholder': 'Saisissez votre nom'}}) }}
-                <span class="error">{{ form_errors(registrationForm.nom) }}</span>
-            </div>
-
-            <div class="input-field col s12 m6 l6 offset-m3 offset-l3">
-                <label for = 'prenom'>Prénom</label>
-                {{ form_widget(registrationForm.prenom, {'attr': {'placeholder': 'Saisissez votre prénom'}}) }}
-                <span class="error">{{ form_errors(registrationForm.prenom) }}</span>
-            </div>
-
-            <div class="input-field col s12 m6 l6 offset-m3 offset-l3">
-                <label for = 'numtel'>Numéro de téléphone</label>
-                {{ form_widget(registrationForm.numtel, {'attr': {'placeholder': 'Saisissez votre Numéro de téléphone'}}) }}
-                <span class="error">{{ form_errors(registrationForm.numtel) }}</span>
-            </div>
-            
-            <div class="input-field col s12 m6 l6 offset-m3 offset-l3">
-                <label for = 'adresse'>Adresse</label>
-                {{ form_widget(registrationForm.adresse, {'attr': {'placeholder': 'Saisissez votre Adresse'}}) }}
-                <span class="error">{{ form_errors(registrationForm.adresse) }}</span>
-            </div>
-
-            <div class="input-field col s12 m6 l6 offset-m3 offset-l3">
-                <label for = 'password'>Mot de passe</label>
-                {{ form_widget(registrationForm.password, {'attr': {'placeholder': 'Saisissez votre mot de passe'}}) }}
-                <span class="error">{{ form_errors(registrationForm.password) }}</span>
-            </div>
-            <label for = 'confirmpassword'>Vérifier Mot de passe</label>
-                {{ form_widget(registrationForm.confirmpassword, {'attr': {'placeholder': 'Vérifier votre mot de passe'},'label_attr': {'class': 'label-class'}}) }}
-                <span class="error">{{ form_errors(registrationForm.confirmpassword) }}</span>
-            <div class="input-field col s12">
-                <input type="submit" name="" class="btn btn-primary" value="Inscription">
-            </div>
-            
-            <div class="input-field col s12 m6 l6 offset-m3 offset-l3">
-                <label for = 'allergie'>Vos allergies</label>
-                {{ form_widget(registrationForm.allergie, {'attr': {'placeholder': ''}}) }}
-                <span class="error">{{ form_errors(registrationForm.allergie) }}</span>
-            </div>
-        {{ form_end(registrationForm) }}
-    </div>
-
-<style>
-.container-center {
-    font-family: Calibri, serif;
-    }
-
-    .container-center{
-        max-width: 50%;
-    }
-
-    form label {
-        display: block;
-        font-weight: bold;
-        margin-bottom: 10px;
-    }
-
-    .container-center {
-        border: 1px solid lightgray;
-        background-color: rgba( 225, 233, 255, 0.25 );
-    }
-
-    h1 {
-        font-style: italic;
-        font-size: 1.1em;
-        padding: 5px;
-        font-family:centre;
-    }
-
-    form  div {
-        display: inline-block;
-        margin-bottom: 10px;
-        padding: 10px;
-        width: 80%;
-    }
-
-    /* button[ type = submit ] {
-        padding: 10px;
-        margin-top: 15px;
-        width: auto;
-    }
-
-    .help-text {
-        color: #2b2b2b;
-        font-size: 12px;
-    } */
-    </style>
-    {% endblock %} 
-#}
-
 {% extends 'base.html.twig' %}
 
 {% block title %}Inscription{% endblock %}
 {% block content %} 
-    {# <img class="img" src="uploads/logofinal.png" alt="logo">  #}
     <div class="container">
         {{ form_start(registrationForm, {'attr': {'class': 'row'}}) }}
 
@@ -158,20 +57,29 @@
 
             <br>
 
-            {# <button type='submit'>S'inscrire</button> #}
 
-        <div class="container">
-                <button type = 'submit'class="btn btn-primary"style="background-color: #b18914; color: #ffffff; border-color:  #b18914;">S'inscrire</button>
-        </div>
+        <div class="center">
+        <button class="btn btn-lg btn-primary " type="submit"style="background-color: #b18914; color: #ffffff; border-color:  #b18914;">
+        S'inscrire
+        </button>
+    
+    <p style=" margin-left: -7px">Vous avez déjà un 
+    <a style="color: #b18914;" href="{{ path('app_login') }}">Compte ?</a></p><br> 
+    
+    
+    </div>
         </fieldset>   
         {{ form_end(registrationForm) }}
     </div>
+
 </div>
     <style>
     .container {
     font-family: Calibri, serif;
     max-width: 50%;
     margin-bottom:20px;
+    display: flex;
+    justify-content: center;
     }
     .form-group {
     text-align: center;
@@ -191,7 +99,9 @@
     p{
         margin-left: 70px;
     }
-
+    .center{
+    text-align: center; 
+}
     legend {
         font-style: italic;
         font-size: 2.1em;
@@ -210,19 +120,19 @@
         width: 90%;
     }
     label{
-        color:#ffffff;
+        color:#000000;
     }
-    .container {
-    display: flex;
-    justify-content: center;
-}
-    button[ type = submit ] {
-        width: 200px;
+ 
+button[ type = submit ]{
         font-family:center;
         margin-bottom:10px;
-    }  
+        margin-top:10px;
+        width: 200px;
+        text-align: center;
+}  
+    
     body {
-background-image: url("uploads/image1.png");
+background-image: url("uploads/imglavuedor.png");
 background-repeat: no-repeat;
 background-size: cover;
 

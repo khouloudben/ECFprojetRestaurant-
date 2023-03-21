@@ -16,23 +16,12 @@ class ImagesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            // ->add('name')
+           
             ->add('imageName')
             ->add('imageFile',FileType::class)
-            // ->add('imageSize')
+        
             ->add('updatedAt')
-            // ->add('updatedAt', DateType::class,[
-            //     'label' => 'Date de mise à jour',
-            //     'widget' => 'single_text', 
-            //     'format' => 'yyyy-MM-dd',
-            //     'data' => new \DateTimeImmutable(),
-            // ])            
-            // ->add('createdAt', DateType::class,[
-            //     'label' => 'Date de mise à jour',
-            //     'widget' => 'single_text', 
-            //     'format' => 'yyyy-MM-dd',
-            //     'data' => new \DateTimeImmutable(),
-            // ])            
+          
             ->add('createdAt')
             ->add('plat')
 

@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-md-12">
                 <a href="{{ path('app_listeplat') }}"><p class="retour";> < retour <p> </a>
-                <h1 class="text-center">{% if mode == 'new' %}Ajouter{% else %}Modification{% endif %} - Plat</h1>
+                <h1 class="text-center">{% if mode == 'new' %}Ajouter{% else %}Modifier{% endif %} un Plat</h1>
         </div>
         </div>
 
@@ -22,9 +22,9 @@
                 {{ form_label(form.description, 'Description', {'label_attr': {'class': 'font '}}) }}
                 {{ form_widget(form.description, { 'attr': {'class': 'form-control'} }) }}
                 {{ form_errors(form.description) }}
-            
-                {{ form_label(form.prix, 'Prix', {'label_attr': {'class': 'font '}}) }}
-                {{ form_widget(form.prix, { 'attr': {'class': 'form-control', 'value': '€'} }) }}
+                               
+                {{ form_label(form.prix, 'Prix', {'label_attr': {'class': 'font_prix '}}) }}
+                {{ form_widget(form.prix, { 'attr': {'class': 'form-control'} }) }}
                 {{ form_errors(form.prix) }}
 
                 {{ form_label(form.categoriserlesplats, 'Categoriser les plats', {'label_attr': {'class': 'font '}}) }}
@@ -68,6 +68,11 @@
 }
 .font{
 margin-right:10em;
+font-size: 17px;
+margin-top:20px;
+display: inline-block;
+}
+.font_prix{
 font-size: 17px;
 margin-top:20px;
 display: inline-block;
