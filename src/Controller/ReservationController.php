@@ -71,49 +71,78 @@ public function pageReservation(ManagerRegistry $doctrine,ReservationRepository 
    * 
    * @return Response
    */
+    // #[Route('/reservation_edit/{id}', name: 'reservation_edit')]
+    // public function edit(ManagerRegistry $doctrine,ReservationRepository $reservationRepository,Request $request, int $id=null): Response
+    // {
+    // // Entity Manager de Symfony
+    // // $user=$this->getUser();
+    // $entityManager = $doctrine->getManager();
+    // $reservationRepository = $entityManager->getRepository(Reservation::class);
+    // // Si un identifiant est présent dans l'url alors il s'agit d'une modification
+    // // Dans le cas contraire il s'agit d'une création dune reservation
+    // if($id) {
+    //     $mode = 'update';
+    //     // On récupère la reservation qui correspond à l'id passé dans l'url
+    //     $reservation = $reservationRepository->findBy(['id' => $id])[0];
+    // }
+    // else {
+    //     $mode = 'new';
+    //     $user=$this->getUser();
+    //     $reservation = new Reservation();
+    //     //   $reservation->setUser($user);
+    
+    // }
+
+    // // $categories =  $entityManager->getRepository(Category::class)->findAll();
+    // $form = $this->createForm(ReservationType::class, $reservation);
+    // $form->handleRequest($request);
+
+    // if($form->isSubmitted() && $form->isValid()) {
+    // $this->saveReservation($reservation,$doctrine, $mode,);
+
+    // return $this->redirectToRoute('app_pageReservation', array('id' => $reservation->getId()));
+    
+    // }
+
+    // $parameters = array(
+    //         'form'      => $form->createView(),
+    //         'reservation'   => $reservation,
+    //         'mode'      => $mode
+    //     );
+    // return $this->render('reservation/edit.html.twig', $parameters);
+    // }
+
     #[Route('/reservation_edit/{id}', name: 'reservation_edit')]
-    public function edit(ManagerRegistry $doctrine,ReservationRepository $reservationRepository,Request $request, int $id=null): Response
+    public function edit(ManagerRegistry $doctrine, ReservationRepository $reservationRepository, Request $request, int $id = null): Response
     {
-    // Entity Manager de Symfony
-    $user=$this->getUser();
-    $entityManager = $doctrine->getManager();
-    $reservationRepository = $entityManager->getRepository(Reservation::class);
-    // Si un identifiant est présent dans l'url alors il s'agit d'une modification
-    // Dans le cas contraire il s'agit d'une création dune reservation
-    if($id) {
-        $mode = 'update';
-        // On récupère la reservation qui correspond à l'id passé dans l'url
-        $reservation = $reservationRepository->findBy(['id' => $id])[0];
-    }
-    else {
-        $mode = 'new';
-        $user=$this->getUser();
-        $reservation = new Reservation();
-        //  $reservation->setUser($user);
+        $entityManager = $doctrine->getManager();
     
-    }
-
-    // $categories =  $entityManager->getRepository(Category::class)->findAll();
-    $form = $this->createForm(ReservationType::class, $reservation);
-    $form->handleRequest($request);
-
-    if($form->isSubmitted() && $form->isValid()) {
-    $this->saveReservation($reservation,$doctrine, $mode,);
-
-    return $this->redirectToRoute('app_pageReservation', array('id' => $reservation->getId()));
+        if ($id) {
+            $mode = 'update';
+            $reservation = $reservationRepository->findOneBy(['id' => $id]);
+        } else {
+            $mode = 'new';
+            $user = $this->getUser();
+            $reservation = new Reservation();
+            // $reservation->setUser($user);
+        }
     
-    }
-
-    $parameters = array(
-            'form'      => $form->createView(),
-            'reservation'   => $reservation,
-            'mode'      => $mode
+        $form = $this->createForm(ReservationType::class, $reservation);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->saveReservation($reservation, $doctrine, $mode);
+            return $this->redirectToRoute('app_pageReservation', array('id' => $reservation->getId()));
+        }
+    
+        $parameters = array(
+            'form' => $form->createView(),
+            'reservation' => $reservation,
+            'mode' => $mode
         );
-
-    return $this->render('reservation/edit.html.twig', $parameters);
+        return $this->render('reservation/edit.html.twig', $parameters);
     }
-
-
+    
 
     #[Route('/save_reservation/{id}', name: 'save_reservation')]
     private function saveReservation(Reservation $reservation,ManagerRegistry $doctrine, string $mode){
