@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ReservationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\User;
 
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
 class Reservation
@@ -28,6 +29,10 @@ class Reservation
 
     #[ORM\Column(length: 255)]
     private ?string $user = null;
+
+    #[ORM\ManyToOne(inversedBy: 'reservations')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $reservation = null;
 
 
     public function getId(): ?int
@@ -91,6 +96,18 @@ class Reservation
     public function setUser(string $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getReservation(): ?User
+    {
+        return $this->reservation;
+    }
+
+    public function setReservation(?User $reservation): self
+    {
+        $this->reservation = $reservation;
 
         return $this;
     }

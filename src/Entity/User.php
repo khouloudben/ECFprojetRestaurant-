@@ -55,7 +55,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Menu::class, orphanRemoval: true)]
     private Collection $menus;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Reservation::class)]
+    #[ORM\OneToMany(mappedBy: 'reservation', targetEntity: Reservation::class)]
     private Collection $reservations;
 
 
@@ -274,7 +274,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->reservations->contains($reservation)) {
             $this->reservations->add($reservation);
-            $reservation->setUser($this);
+            $reservation->setReservation($this);
         }
 
         return $this;
@@ -284,13 +284,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->reservations->removeElement($reservation)) {
             // set the owning side to null (unless already changed)
-            if ($reservation->getUser() === $this) {
-                $reservation->setUser(null);
+            if ($reservation->getReservation() === $this) {
+                $reservation->setReservation(null);
             }
         }
 
         return $this;
     }
 
+    
 
 }
