@@ -86,8 +86,12 @@ public function pageReservation(ManagerRegistry $doctrine,ReservationRepository 
         $reservation = $reservationRepository->findBy(['id' => $id])[0];
     }
     else {
-        $mode       = 'new';
-        $reservation   = new Reservation();
+        $mode = 'new';
+        $user=$this->getUser();
+        $reservation = new Reservation();
+        if($user){
+            $reservation->setUser($user);
+        }
     }
 
     // $categories =  $entityManager->getRepository(Category::class)->findAll();
