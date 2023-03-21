@@ -50,20 +50,20 @@ public function pageReservation(ManagerRegistry $doctrine,ReservationRepository 
 
 }
 
-#[Route('/pageReservationUser', name: 'app_pageReservationUser',methods:['GET'])]
-public function pageReservationUser(ManagerRegistry $doctrine,ReservationRepository $reservationRepository): Response
-{
-$user=$this->getUser();
-     // Entity Manager de Symfony
-    $entityManager = $doctrine->getManager();
-    $reservationRepository = $entityManager->getRepository(Reservation::class);
-     // On récupère tous les articles disponibles en base de données
-    $reservations = $reservationRepository->findBy(['user' => $user]);
-    return $this->render('reservation/pageReservationUser.html.twig', [
-        'reservations' => $reservations,
-    ]);
+// #[Route('/pageReservationUser', name: 'app_pageReservationUser',methods:['GET'])]
+// public function pageReservationUser(ManagerRegistry $doctrine,ReservationRepository $reservationRepository): Response
+// {
+// $user=$this->getUser();
+//      // Entity Manager de Symfony
+//     $entityManager = $doctrine->getManager();
+//     $reservationRepository = $entityManager->getRepository(Reservation::class);
+//      // On récupère tous les articles disponibles en base de données
+//     $reservations = $reservationRepository->findBy(['user' => $user]);
+//     return $this->render('reservation/pageReservationUser.html.twig', [
+//         'reservations' => $reservations,
+//     ]);
 
-}
+// }
     /**
    * Création / Modification d'une reservation
    * 
@@ -107,7 +107,7 @@ $user=$this->getUser();
             'mode'      => $mode
         );
 
-    return $this->render('reservation/edit.html.twig', $parameters);
+    return $this->render('reservation/pageReservation.html.twig', $parameters);
     }
 
 
