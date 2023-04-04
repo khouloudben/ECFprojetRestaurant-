@@ -22,7 +22,7 @@ class ReservationType extends AbstractType
                 'label' => 'Le nombre de Couverts',
                 'constraints' => [
                 new NotBlank([
-                    'message' => 'Ce champ ne peut être vide'
+                    'message' => 'Ce champ ne peut pas être vide'
                     ])
                 ]
             ]);
@@ -34,7 +34,7 @@ class ReservationType extends AbstractType
                 'data' => new \DateTime(),
                 'constraints' => [
                     new NotBlank([
-                    'message' => 'Ce champ ne peut être vide'
+                    'message' => 'Ce champ ne peut pas être vide'
                     ])
                     ]
             ]);
@@ -44,7 +44,7 @@ class ReservationType extends AbstractType
                 'data' => new \DateTime(),
                 'constraints' => [
                         new NotBlank([
-                        'message' => 'Ce champ ne peut être vide'
+                        'message' => 'Ce champ ne peut pas être vide'
                         ])
                         ]
             ]);
@@ -52,7 +52,7 @@ class ReservationType extends AbstractType
                 'label' => 'La mention des allergies',
                 'constraints' => [
                 new NotBlank([
-                    'message' => 'Ce champ ne peut être vide'
+                    'message' => 'Ce champ ne peut pas être vide'
                     ])
                 ]
             ]);

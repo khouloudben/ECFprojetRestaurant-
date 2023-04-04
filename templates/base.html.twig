@@ -52,7 +52,7 @@
                 <li class="nav-item {{ app.request.get('_route') == 'accueil' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ path('app_pageReservation') }}">Les réservations</a>
                     {% else %}
-                    <a class="nav-link" href="{{ path('app_pageReservationUser') }}">Mes réservations</a>
+                    <a class="nav-link" href="{{ path('app_pageReservation') }}">Mes réservations</a>
                 </li>
                 {% endif %}
                 {% endif %}

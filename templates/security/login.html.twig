@@ -5,9 +5,6 @@
 
 {% block content %} 
 <form class="container" method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
 
     {% if app.user %}
         <div class="mb-3">
@@ -24,6 +21,15 @@
     <input type="hidden" name="_csrf_token"
         value="{{ csrf_token('authenticate') }}"
     >
+    
+    {% if error %}
+    <div class="alert alert-danger error input ">
+    L'utilisateur n'existe pas. Veuillez vérifier votre email et/ou mot de passe
+    </div>
+    {% endif %} 
+    {# {% if error %}
+<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %} #}
 
     <div class="center">
     <button class="btn btn-lg btn-primary " type="submit"style="background-color: #b18914; color: #ffffff; border-color:  #b18914;">

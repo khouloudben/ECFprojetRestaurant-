@@ -1,0 +1,11 @@
+<?php
+use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\Loader\ArrayLoader;
+
+$translator = new Translator('fr_FR');
+$translator->addLoader('array', new ArrayLoader());
+$translator->addResource('array', [
+    'Invalid credentials.' => 'Les informations d\'identification invalides.',
+], 'fr_FR');
+
+echo $translator->trans('Invalid credentials.'); // outputs « Les informations d\'identification invalides. »

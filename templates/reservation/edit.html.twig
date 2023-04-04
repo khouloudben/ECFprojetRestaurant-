@@ -7,10 +7,10 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-            {% if is_granted('ROLE_ADMIN') %}
+            {% if is_granted('ROLE_ADMIN') %} #}
                 <a href="{{ path('app_pageReservation') }}">
-            {% else %}
-                <a href="{{ path('app_pageReservationUser') }}">
+            {# {% else %}
+                <a href="{{ path('app_pageReservationUser') }}"> #}
             {% endif %}
                     <p class="retour";> < retour <p> </a>
                     <h1 class="text-center">

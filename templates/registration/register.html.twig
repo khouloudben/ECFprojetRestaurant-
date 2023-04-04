@@ -3,61 +3,66 @@
 {% block title %}Inscription{% endblock %}
 {% block content %} 
     <div class="container">
-        {{ form_start(registrationForm, {'attr': {'class': 'row'}}) }}
+        {{ form_start(registrationForm, {'attr': {'novalidate': 'novalidate' }} ) }}
 
         <fieldset>
             <legend>Création de votre compte</legend>
-            <p>
+            <div class="input">
                 <label for = 'nom'>Nom</label>
                 {{ form_widget(registrationForm.nom, {'attr': {'placeholder': 'Saisissez votre nom'}}) }}
-            <span class="error">{{ form_errors(registrationForm.nom) }}</span>
-            </p>
+                {{ form_errors(registrationForm.nom) }}
+            </div>
 
-            <p>
+            <div class="input">
                 <label for = 'prenom'>Prénom</label>
                 {{ form_widget(registrationForm.prenom, {'attr': {'placeholder': 'Saisissez votre prénom'}}) }}
-                <span class="error">{{ form_errors(registrationForm.prenom) }}</span>
-            </p>
+                {{ form_errors(registrationForm.prenom) }}
+            </div>
 
-            <p>
+            <div class="input">
                 <label for = 'numtel'>Numéro de téléphone</label>
                 {{ form_widget(registrationForm.numtel, {'attr': {'placeholder': 'Saisissez votre Numéro de téléphone'}}) }}
-                <span class="error">{{ form_errors(registrationForm.numtel) }}</span>
-            </p>
+                {{ form_errors(registrationForm.numtel) }}
+            </div>
 
-            <p>
+            <div class="input">
                 <label for = 'adresse'>Adresse</label>
                 {{ form_widget(registrationForm.adresse, {'attr': {'placeholder': 'Saisissez votre Adresse'}}) }}
-                <span class="error">{{ form_errors(registrationForm.adresse) }}</span>
-            </p>
+                {{ form_errors(registrationForm.adresse) }}
+            </div>
 
-            <p>
+            <div class="input">
                 <label for = 'email'>E-mail</label>
                 {{ form_widget(registrationForm.email, {'attr': {'placeholder': 'Saisissez votre email'}}) }}
-                <span class="error">{{ form_errors(registrationForm.email) }}</span>
-            </p>
+                {{ form_errors(registrationForm.email) }}
+            </div>
 
-            <p>
+            <div class="input">
                 <label for = 'password'>Mot de passe (8 caractères minimum)</label>
                 {{ form_widget(registrationForm.password) }}
-                <span class="error">{{ form_errors(registrationForm.password) }}</span>
-            </p>
+                {{ form_errors(registrationForm.password) }}
+            </div>
 
-            <p>
+            <div class="input">
                 <label for = 'confirmpassword'>Vérifier Mot de passe</label>
                 {{ form_widget(registrationForm.confirmpassword) }}
-                <span class="error">{{ form_errors(registrationForm.confirmpassword) }}</span>
-            </p>
+                {{ form_errors(registrationForm.confirmpassword) }}
+            </div>
 
-            <p>
+            <div class="input">
                 <label for = 'allergie'>Vos allergies</label>
-            <textarea {{ form_widget(registrationForm.allergie, {'attr': {'cols': '30', 'rows': '10'}}) }} </textarea>
-                <span class="error">{{ form_errors(registrationForm.allergie) }}</span>
-            </p>
-
+                <textarea {{ form_widget(registrationForm.allergie, {'attr': {'cols': '30', 'rows': '10'}}) }} </textarea>
+                {{ form_errors(registrationForm.allergie) }}
+            </div>
             <br>
 
-
+                {% if not registrationForm.vars.valid %}
+                <div class="alert alert-danger error input ">
+                    Le formulaire contient des erreurs. Vérifiez les différentes rubriques.
+                </div>
+                {% else %}
+                    <div class="col-md-8"></div>
+                {% endif %} 
         <div class="center">
         <button class="btn btn-lg btn-primary " type="submit"style="background-color: #b18914; color: #ffffff; border-color:  #b18914;">
         S'inscrire
@@ -79,6 +84,7 @@
     max-width: 50%;
     margin-bottom:20px;
     display: flex;
+    flex-direction: column-reverse;
     justify-content: center;
     }
     .form-group {
@@ -96,8 +102,15 @@
     background-color: rgba( 225, 233, 255, 0.25 );
     
     }
-    p{
+    .input{
         margin-left: 70px;
+        width: 90%;
+        padding: 5px;
+        margin-bottom: 5px;
+        display: inline-block ;
+    }
+    .error{
+        max-width: 81%;
     }
     .center{
     text-align: center; 
@@ -113,7 +126,7 @@
     margin-left: 900px;    
     }
 
-    form input,form textarea,p {
+    form input,form textarea{
         display: inline-block;
         margin-bottom: 5px;
         padding: 5px;
@@ -131,7 +144,7 @@ button[ type = submit ]{
         text-align: center;
 }  
     
-    body {
+body {
 background-image: url("{{ asset('uploads/imglavuedor.png') }}");
 background-repeat: no-repeat;
 background-size: cover;

@@ -23,7 +23,7 @@ class PlatType extends AbstractType
                 'label' => 'Titre*',
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Ce champ ne peut être vide'
+                        'message' => 'Ce champ ne peut pas être vide'
                     ])
                 ]
             ]);
@@ -31,7 +31,7 @@ class PlatType extends AbstractType
                 'label' => 'Catégoriser Les Plats',
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Ce champ ne peut être vide'
+                        'message' => 'Ce champ ne peut pas  être vide'
                     ])
                 ]
             ]);
@@ -40,7 +40,7 @@ class PlatType extends AbstractType
                 'label' => 'Description',
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Ce champ ne peut être vide'
+                        'message' => 'Ce champ ne peut pas être vide'
                     ])
                 ]
             ]);
@@ -49,7 +49,7 @@ class PlatType extends AbstractType
                 'label' => 'Prix',
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Ce champ ne peut être vide'
+                        'message' => 'Ce champ ne peut pas être vide'
                     ])
                 ]
             ]);

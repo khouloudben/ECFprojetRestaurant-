@@ -20,7 +20,7 @@ class MenuType extends AbstractType
                 'label' => 'Titre*',
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Ce champ ne peut être vide'
+                        'message' => 'Ce champ ne peut pas être vide'
                     ])
                 ]
             ]);
