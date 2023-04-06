@@ -1,19 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier les images{% endblock %}
+{% block title %}Modifier les images d'accueil{% endblock %}
 
 {% block content %}
 <div class="container">
-    <h1>Modifier les images</h1>
+    <h1>Modifier les images d'accueil</h1>
 
-    {{ include('images/_form.html.twig', {'button_label': 'Mise à jour'}) }}
-    <a href="{{ path('app_images_index') }}"> <p class="retour">< retour à la liste<P></a>
+    {{ include('image_accueil/_form.html.twig', {'button_label': 'Mise à jour'}) }}
 
-
-    {{ include('images/_delete_form.html.twig') }}
+    <a href="{{ path('app_image_accueil_index') }}"> <p class="retour">< retour à la liste<P></a>
+ 
+    {{ include('image_accueil/_delete_form.html.twig') }}
 </div>
-
-    
 <style>
     .container{
     max-width: 800px;

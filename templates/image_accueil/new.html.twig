@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelles images d'accueil{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Créer de nouvelles image d'accueil</h1>
+    {{ include('image_accueil/_form.html.twig') }}
+    <a href="{{ path('app_image_accueil_index') }}"> <p class="retour";>< retour à la liste<p></a>
+</div>
+<style>
+        h1{
+            margin-top:10px;
+        }
+        .container{
+        max-width: 800px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        background-color: #F9F9FA;
+        color: #413C49;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        padding-bottom: 5px;
+    
+        
+    } 
+    .retour{
+        position: absolute;
+        margin-top: -40.5em;
+        color: #6b6b6b;
+    }
+    </style>
+{% endblock %}

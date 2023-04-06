@@ -40,6 +40,7 @@ class ImagesController extends AbstractController
             'form' => $form,
         ]);
     }
+    
 
     #[Route('/{id}', name: 'app_images_show', methods: ['GET'])]
     public function show(Images $image): Response
@@ -66,6 +67,8 @@ class ImagesController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    
 
     #[Route('/{id}', name: 'app_images_delete', methods: ['POST'])]
     public function delete(Request $request, Images $image, ImagesRepository $imagesRepository): Response

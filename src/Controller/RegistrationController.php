@@ -12,11 +12,12 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Repository\ImageAccueilRepository;
 
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request,ManagerRegistry $doctrine, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function register(Request $request,ManagerRegistry $doctrine, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager,ImageAccueilRepository  $imageAccueilRepository): Response
     {
         $entityManager = $doctrine->getManager();
         $user = new User();
@@ -56,6 +57,7 @@ class RegistrationController extends AbstractController
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
+            'image_accueils' => $imageAccueilRepository->findAll(),
         ]);
     }
 }

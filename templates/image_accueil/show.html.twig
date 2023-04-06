@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Images d'accueil{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Images d'accueil</h2>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ image_accueil.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom de l'image</th>
+                <td>{{ image_accueil.nom }}</td>
+            </tr>
+            <tr> 
+            <th>Fichier d'image</th>
+            <td><img src="{{ vich_uploader_asset(image_accueil, 'imageFile') }}"   width="280" height="380" alt="{{ image_accueil.nom }}"></td>
+        </tr>
+            <tr>
+                <th>Date de mise à jour</th>
+                <td>{{ image_accueil.updatedAt ? image_accueil.updatedAt|date('Y-m-d') : '' }}</td>
+            </tr>
+            {# <tr>
+                <th>Date de création</th>
+                <td>{{ image_accueil.createdAt ? image_accueil.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr> #}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_image_accueil_index') }}"><p class="retour";> < retour à la liste <p></a>
+
+    <a href="{{ path('app_image_accueil_edit', {'id': image_accueil.id}) }}"role="button" class="btn btn-info btn-lg btn-block center-btn"style="background-color: #b18914; color: #ffffff; border-color:  #b18914; width:400px;">modifier</a>
+
+    {{ include('image_accueil/_delete_form.html.twig') }}
+</div>
+<style>
+.table{
+background-color:#f5f5f5;
+}
+h2{
+    font-family: Bodoni, serif;
+    letter-spacing: .05em;
+    font-size: 2em;
+    margin-bottom: 1em;
+    font-style: italic;
+    color: #cd9700;
+    font-weight: 400;
+    text-align: center;
+}
+.container{
+    max-width: 80%;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #F9F9FA;
+    color: #413C49;
+    margin-top:10px;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+
+} 
+.retour{
+    color: #6b6b6b;
+    position: absolute;
+    margin-top: -42.5em;
+}
+.center-btn {
+display: block;
+margin: 0 auto;
+}
+</style>
+{% endblock %}

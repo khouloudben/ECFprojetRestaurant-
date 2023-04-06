@@ -3,7 +3,7 @@
 {% block title %}Connexion{% endblock %}
 
 
-{% block content %} 
+{% block content %}
 <form class="container" method="post">
 
     {% if app.user %}
@@ -59,12 +59,6 @@ h1{
 label{
         color:#000000;
 }
-body {
-background-image: url("{{ asset('uploads/imglavuedor.png') }}");
-background-repeat: no-repeat;
-background-size: cover;
-
-}
 form input,form textarea {
         display: inline-block;
         margin-bottom: 10px;
@@ -88,6 +82,11 @@ button{
         width: 200px;
         text-align: center;
 }  
+body {
+        background-image: url("{{ vich_uploader_asset(image_accueils|last, 'imageFile') }}");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
 
 </style>
 {% endblock %}

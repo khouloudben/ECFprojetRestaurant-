@@ -3,12 +3,30 @@
 {% block title %}Hello AccueilController!{% endblock %}
 
 {% block content %}
+{# <script src="{{ asset('templates/accueil/mon-script.js') }}"></script> #}
+<div class="element-specifique">
 
-<div>
+{# <img  class="img"  src="{{ asset('uploads/imglavuedor.png') }}" alt="logo" width="97%"  height="45%" >   #}
+{% set last_id = image_accueils|last.id %} 
+{% for image_accueil in image_accueils %}
+{% if image_accueil.id == last_id %}
+    <img class="img" src="{{ vich_uploader_asset(image_accueil, 'imageFile') }}"  width="1475" height="600" alt="{{ image_accueil.nom }}">
+{% endif %}
+{% endfor %}
 
-<img class="img"  src="{{ asset('uploads/imglavuedor.png') }}" alt="logo" width="97%"  height="45%" >  
+
+<br>
+{% if is_granted('ROLE_ADMIN') %} #}
+<button class="bouton">
+<a href="{{ path('app_image_accueil_new') }}"role="button"  class="btn "style=" color: #b18914;">
+<i ></i>
+Modifier          
+</a>
+</button>
+{% endif %}
+
+<br>
 </div>
-
 <img class="imgmanu" src="{{ asset('uploads/menu.png') }}" alt="logo" width="10%"  height="10%" >  
 <P class="paragraphe">Chez La vue d'or, nous explorons les classiques de la grande gastronomie française pour les remettre <br> au goût du jour.<br>
 
@@ -20,6 +38,7 @@
 {% for image in images %}
 <img id="img_list" class="imagePlat" src="{{ vich_uploader_asset(image, 'imageFile') }}"  width="280" height="380" alt="{{ image.imageName }}">
 {% endfor %}
+<br>
 <a href="{{ path('reservation_edit') }}"role="button" class="btn btn-info text-right"style="background-color: #b18914; color: #ffffff; border-color:  #b18914; width: 170px;margin-top:3em;margin-bottom:3em;margin-left:45%;text-align: center;">Réservez votre table</a>
 
 <style>
@@ -45,6 +64,22 @@ transform: translate(-50%, -50%);
 margin-left:1.5em;
 margin-top:1.5em;
 }
+
+.element-specifique {
+        position: relative;
+    }
+    .bouton {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        visibility: hidden;
+        border:lightgray ;
+    }
+    .element-specifique:hover .bouton {
+        visibility: visible;
+    }
+
 </style>
 
 

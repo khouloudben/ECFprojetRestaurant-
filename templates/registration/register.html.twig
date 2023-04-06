@@ -60,8 +60,7 @@
                 <div class="alert alert-danger error input ">
                     Le formulaire contient des erreurs. Vérifiez les différentes rubriques.
                 </div>
-                {% else %}
-                    <div class="col-md-8"></div>
+
                 {% endif %} 
         <div class="center">
         <button class="btn btn-lg btn-primary " type="submit"style="background-color: #b18914; color: #ffffff; border-color:  #b18914;">
@@ -135,7 +134,7 @@
     label{
         color:#000000;
     }
- 
+
 button[ type = submit ]{
         font-family:center;
         margin-bottom:10px;
@@ -145,11 +144,10 @@ button[ type = submit ]{
 }  
     
 body {
-background-image: url("{{ asset('uploads/imglavuedor.png') }}");
-background-repeat: no-repeat;
-background-size: cover;
-
-}
+        background-image: url("{{ vich_uploader_asset(image_accueils|last, 'imageFile') }}");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
     
     </style>
 {% endblock %}
