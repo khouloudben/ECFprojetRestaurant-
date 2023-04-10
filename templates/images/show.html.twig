@@ -12,18 +12,10 @@
                 <th>Id</th>
                 <td>{{ image.id }}</td>
             </tr>
-            {# <tr>
-                <th>Nom</th>
-                <td>{{ image.name }}</td>
-            </tr> #}
             <tr>
                 <th>Nom de l'image</th>
                 <td>{{ image.imageName }}</td>
             </tr>
-            {# <tr>
-                <th>Taille de l'image</th>
-                <td>{{ image.imageSize }}</td>
-            </tr> #}
             <tr> 
                 <th>Fichier d'image</th>
                 <td><img src="{{ vich_uploader_asset(image, 'imageFile') }}"   width="280" height="380" alt="{{ image.imageName }}"></td>

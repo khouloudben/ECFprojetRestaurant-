@@ -1,11 +1,6 @@
 {{ form_start(form) }}
     <div class="row justify-content-center align-items-center">
         <div class="form-group  ">
-        {# {{ form_label(form.name, 'Nom', {'label_attr': {'class': 'font ' }}
-        ) }}
-                        
-        {{ form_widget(form.name, { 'attr': {'class': 'form-control'} }) }} #}
-
         {{ form_label(form.imageName, "Nom de l'image", {'label_attr': {'class': 'font ' }}
         ) }}
                         
@@ -31,8 +26,6 @@
                         
         {{ form_widget(form.plat, { 'attr': {'class': 'form-control'} }) }}
 
-        </div>
-        </div>
         {{ form_errors(form) }}
         {# {{ form_widget(form) }} #}
         <div class="form-group text-center">
@@ -41,6 +34,9 @@
                 </button>
             </div>
             {{ form_end(form) }}
+        </div>
+        </div>
+    </div>
 <style>
     h1{
     font-family: Bodoni, serif;

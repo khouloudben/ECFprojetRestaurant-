@@ -5,8 +5,6 @@
 {% block content %}
 {# <script src="{{ asset('templates/accueil/mon-script.js') }}"></script> #}
 <div class="element-specifique">
-
-{# <img  class="img"  src="{{ asset('uploads/imglavuedor.png') }}" alt="logo" width="97%"  height="45%" >   #}
 {% set last_id = image_accueils|last.id %} 
 {% for image_accueil in image_accueils %}
 {% if image_accueil.id == last_id %}
@@ -16,7 +14,7 @@
 
 
 <br>
-{% if is_granted('ROLE_ADMIN') %} #}
+{% if is_granted('ROLE_ADMIN') %}
 <button class="bouton">
 <a href="{{ path('app_image_accueil_new') }}"role="button"  class="btn "style=" color: #b18914;">
 <i ></i>
@@ -28,12 +26,33 @@ Modifier
 <br>
 </div>
 <img class="imgmanu" src="{{ asset('uploads/menu.png') }}" alt="logo" width="10%"  height="10%" >  
-<P class="paragraphe">Chez La vue d'or, nous explorons les classiques de la grande gastronomie française pour les remettre <br> au goût du jour.<br>
+
+<div class="element-specifique">
+{# <P class="paragraphe">Chez La vue d'or, nous explorons les classiques de la grande gastronomie française pour les remettre <br> au goût du jour.<br>
 
     Ainsi, notre cuisine offre le réconfort des produits nobles et des appellations simples qui ont fait la réputation<br> de notre maison et assure une véritable contemporanéité à travers des sauces d'exception.<br>
     
     Au restaurant, sous l'immense toit mécanique, ou dans nos salons privés, venez partager un moment<br> d'histoire(s). 
-</P>
+</P> #}
+<div class="container">
+{% set last_id = modifparagraphes|last.id %} 
+{% for modifparagraphe in modifparagraphes %}
+{% if modifparagraphe.id == last_id %}
+    <p class="paragraphe">{{ modifparagraphe.paragraphe }}</p>
+{% endif %}
+{% endfor %}
+</div>
+
+
+{% if is_granted('ROLE_ADMIN') %} 
+<button class="bouton">
+<a href="{{ path('app_modifparagraphe_new') }}"role="button"  class="btn "style=" color: #b18914;">
+<i ></i>
+Modifier          
+</a>
+</button>
+{% endif %}
+</div>
 
 {% for image in images %}
 <img id="img_list" class="imagePlat" src="{{ vich_uploader_asset(image, 'imageFile') }}"  width="280" height="380" alt="{{ image.imageName }}">
@@ -55,6 +74,12 @@ transform: translate(-50%, -50%);
 .paragraphe{
     text-align: center;
     margin-bottom:6em;
+    max-width: 80%;
+    margin-left:11%;
+
+
+
+    
 }
 .imgmanu{
     margin-top:4em;
