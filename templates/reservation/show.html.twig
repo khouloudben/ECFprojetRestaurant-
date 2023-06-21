@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservation{% endblock %}
+
+{% block content %}
+
+<div class="container">
+<a href="{{ path('app_reservation_index') }}"><p class="retour";> < retour <p></a>
+    <h2>La Réservation</h2>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ reservation.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre de personnes</th>
+                <td>{{ reservation.nombreCouvert }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ reservation.date ? reservation.date|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Heure</th>
+                <td>{{ reservation.heure ? reservation.heure|date('H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Allergie</th>
+                <td>{{ reservation.allergie }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    
+
+    <a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}"role="button" class="btn btn-info btn-lg btn-block center-btn"style="background-color: #b18914; color: #ffffff; border-color:  #b18914; width:400px;margin-bottom:10px;">modifier</a>
+
+    {{ include('reservation/_delete_form.html.twig') }}
+</div>
+<style>
+.table{
+background-color:#f5f5f5;
+}
+h2{
+    font-family: Bodoni, serif;
+    letter-spacing: .05em;
+    font-size: 2em;
+    margin-bottom: 1em;
+    font-style: italic;
+    color: #cd9700;
+    font-weight: 400;
+    text-align: center;
+}
+.container{
+    max-width: 80%;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #F9F9FA;
+    color: #413C49;
+    margin-top:10px;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+
+} 
+.retour{
+    color: #6b6b6b;
+
+}
+.center-btn {
+display: block;
+margin: 0 auto;
+}
+</style>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Horaires{% endblock %}
+
+{% block content %}
+<div class="container">
+<a href="{{ path('app_horaire_index') }}"><p class="retour";> < retour <p></a>
+    <h1>Horaires d'ouvertures</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ horaire.id }}</td>
+            </tr>
+            <tr>
+            <th>Premier jour de la semaine</th>
+            <td>
+            {{ horaire.premierjour }}
+            </td>
+            </tr>
+            <tr>
+            <th>Dernier jour de la semaine</th>
+            <td>{{ horaire.dernierjour }}</td>
+        </tr>
+            <tr>
+                <th>Heure du matin</th>
+                <td>{{ horaire.heureOuvertureMatin ? horaire.heureOuvertureMatin|date('H:i:s') : '' }}</td>
+                <td>{{ horaire.heureFerMatin ? horaire.heureFerMatin|date('H:i:s') : '' }}</td>
+        </tr>
+        <tr>
+        <th>Heure du soire</th>
+        <td>{{ horaire.heureOuvertureSoire ? horaire.heureOuvertureSoire|date('H:i:s') : '' }}</td>
+        <td>{{ horaire.heureFerSoire ? horaire.heureFerSoire|date('H:i:s') : '' }}</td>
+    </tr>
+    <tr>
+    <th>Jour</th>
+    <td>{{ horaire.jour }}</td>
+</tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ horaire.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_horaire_edit', {'id': horaire.id}) }}"role="button" class="btn btn-info btn-lg btn-block center-btn"style="background-color: #b18914; color: #ffffff; border-color:  #b18914; width:400px;">Modifier</a>
+
+    {{ include('horaire/_delete_form.html.twig') }}
+</div>
+<style>
+.table{
+background-color:#f5f5f5;
+max-width: 100%;
+}
+h2{
+    font-family: Bodoni, serif;
+    letter-spacing: .05em;
+    font-size: 2em;
+    margin-bottom: 1em;
+    font-style: italic;
+    color: #cd9700;
+    font-weight: 400;
+    text-align: center;
+}
+.container{
+    max-width: 80%;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #F9F9FA;
+    color: #413C49;
+    margin-top:10px;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+
+} 
+.retour{
+    color: #6b6b6b;
+}
+.center-btn {
+display: block;
+margin: 0 auto;
+}
+
+
+</style>
+{% endblock %}

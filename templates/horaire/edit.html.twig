@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Horaires{% endblock %}
+
+{% block content %}
+<div class="container">
+<div >
+    <h1>Modifier Horaires d'ouvertures</h1>
+    <a href="{{ path('app_horaire_index') }}"><p class="retour">< retour<p></a>
+    {{ include('horaire/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('horaire/_delete_form.html.twig') }}
+</div>
+
+</div>
+
+<style>
+    .ma-classe{
+        width:400px;
+    }
+    .container{
+    max-width: 800px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #F9F9FA;
+    color: #413C49;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+
+    
+} 
+.retour{
+    color: #6b6b6b;
+}
+</style>
+{% endblock %}

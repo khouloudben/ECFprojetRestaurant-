@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\HoraireRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +18,7 @@ use App\Repository\ImageAccueilRepository;
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request,ManagerRegistry $doctrine, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager,ImageAccueilRepository  $imageAccueilRepository): Response
+    public function register(Request $request,ManagerRegistry $doctrine, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager,ImageAccueilRepository  $imageAccueilRepository,HoraireRepository $horaireRepository): Response
     {
         $entityManager = $doctrine->getManager();
         $user = new User();
@@ -58,6 +59,7 @@ class RegistrationController extends AbstractController
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
             'image_accueils' => $imageAccueilRepository->findAll(),
+            'horaires' => $horaireRepository->findAll(),
         ]);
     }
 }

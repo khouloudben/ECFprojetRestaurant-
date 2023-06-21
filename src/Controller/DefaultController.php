@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-
+use App\Repository\HoraireRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
@@ -26,6 +26,12 @@ class DefaultController extends AbstractController
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
+        ]);
+    }
+    public function getHoraire(HoraireRepository $horaireRepository): Response
+    {
+        return $this->render('base.html.twig', [
+            'horaires' => $horaireRepository->findAll(),
         ]);
     }
 }

@@ -1,0 +1,92 @@
+{{ form_start(form) }}
+    <div class="row justify-content-center align-items-center">
+        <div class="form-group">
+
+        {{ form_label(form.premierjour, "Premier jour de la semaine", {'label_attr': {'class': 'font ' }}
+        ) }}<br>
+            {{ form_widget(form.premierjour, { 'attr': {'class': 'form-control'} }) }}
+            <br>
+        
+        {{ form_label(form.dernierjour, "Dernier jour de la semaine", {'label_attr': {'class': 'font ' }}
+        ) }}<br>
+        {{ form_widget(form.dernierjour, { 'attr': {'class': 'form-control'} }) }}
+        <br>
+        
+        {{ form_label(form.heureOuvertureMatin, "Heure du matin", {'label_attr': {'class': 'font ' }}) }}
+        <br>
+            {{ form_widget(form.heureOuvertureMatin) }}
+            {{ form_label(form.heureFerMatin, "à", {'label_attr': {'class': 'font2 ' }}) }}
+            {{ form_widget(form.heureFerMatin, ) }}
+            <br>
+                {{ form_label(form.heureOuvertureSoire, "Heure du soire", {'label_attr': {'class': 'font ' }}) }}<br>
+                    {{ form_widget(form.heureOuvertureSoire) }}
+                    {{ form_label(form.heureFerSoire, "à", {'label_attr': {'class': 'font2 ' }}) }}
+                    {{ form_widget(form.heureFerSoire,) }}
+                    <br>
+                        
+                        {{ form_label(form.jour, "Jour", {'label_attr': {'class': 'font ' }}
+                        ) }}<br>
+                        {{ form_widget(form.jour, { 'attr': {'class': 'form-control'} }) }}<br>
+
+            {{ form_label(form.description, "Description", {'label_attr': {'class': 'font ' }}
+            ) }}<br>
+            {{ form_widget(form.description, { 'attr': {'class': 'form-control'} }) }}<br>
+            {{ form_errors(form) }}
+        <div class="form-group text-center">
+            <button class="button btn btn-info btn-lg btn-block">
+                {{ button_label|default('Sauvegarder') }}
+            </button>
+{{ form_end(form) }}
+</div>
+</div>
+</div>
+</div>
+<style>
+    h1 {
+        font-family: Bodoni, serif;
+        letter-spacing: 0.05em;
+        font-size: 2.5em;
+        font-style: italic;
+        color: #cd9700;
+        text-align: center;
+    }
+    .container {
+        border: none;
+        border-radius: none;
+        background-color: #F9F9FA;
+        color: #413C49;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        padding-bottom: 30px;
+    }
+    .form-group {
+        margin: 0 auto;
+    }
+    .required {
+        font-size: 30px;
+    }
+    .font {
+        margin-right: 10em;
+        font-size: 17px;
+        margin-top: 20px;
+        display: inline-block;
+    }
+    .font2 {
+        margin-right: 10em;
+        font-size: 17px;
+        margin-top: 10px;
+        display: inline-block;
+    }
+    .btn-lg {
+        color: #fff;
+        margin-top: 30px;
+        width: 400px;
+    }
+    .button.btn-info {
+        background-color: #b18914;
+        color: #ffffff;
+        border-color: #b18914;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+</style>

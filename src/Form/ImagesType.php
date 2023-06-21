@@ -8,22 +8,30 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 
 class ImagesType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-           
-            ->add('imageName')
-            ->add('imageFile',FileType::class)
+    
+
+        $builder->add('imageName');
+        $builder->add('imageFile',FileType::class);
         
-            ->add('updatedAt')
-          
-            ->add('createdAt')
-            ->add('plat')
+            $builder->add('updatedAt', DateTimeType::class, [
+                'widget' => 'choice',
+                'input' => 'datetime',
+                'data' => new \DateTime(),
+            ]);
+            
+            $builder->add('createdAt', DateTimeType::class, [
+                'widget' => 'choice',
+                'input' => 'datetime',
+                'data' => new \DateTime(),
+            ]);
+            $builder->add('plat');
 
         ;
     }

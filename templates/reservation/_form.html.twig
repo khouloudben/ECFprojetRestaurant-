@@ -1,0 +1,109 @@
+
+{{form_start(form) }}
+            <div class="row justify-content-center align-items-center">
+                    <div class="form-group">
+
+                    {{ form_label(form.nom, 'Nom', {'label_attr': {'class': 'font '}}) }}
+                {{ form_widget(form.nom,  { 'attr': {'class': 'form-control'} }) }}
+                {{ form_errors(form.nom) }}
+            
+            
+                {{ form_label(form.prenom, 'Prénom', {'label_attr': {'class': 'font '}}) }}
+                {{ form_widget(form.prenom, { 'attr': {'class': 'form-control'} }) }}
+                {{ form_errors(form.prenom) }}
+
+                {{ form_label(form.email, 'E-mail', {'label_attr': {'class': 'font '}}) }}
+            {{ form_widget(form.email,  { 'attr': {'class': 'form-control'} }) }}
+            {{ form_errors(form.email) }}
+
+                    {{ form_label(form.nombreCouvert, 'Un nombre de personnes', {'label_attr': {'class': 'font '}}) }}
+                    {{ form_widget(form.nombreCouvert, { 'attr': {'class': 'form-control'} }) }}
+                    {{ form_errors(form.nombreCouvert) }}
+                    
+                    {{ form_label(form.date, 'Date', {'label_attr': {'class': 'font '}}) }}
+                    {{ form_widget(form.date, { 'attr': {'class': 'form-control'} }) }}
+                    {{ form_errors(form.date) }}
+                    
+                {{ form_label(form.heure, 'Heure', {'label_attr': {'class': 'font '}}) }}
+                {{ form_widget(form.heure) }}
+                {{ form_errors(form.heure) }}
+
+                    {{ form_label(form.allergie, 'Allergie', {'label_attr': {'class': 'font '}}) }}
+                {{ form_widget(form.allergie, { 'attr': {'class': 'form-control'} }) }}
+                {{ form_errors(form.allergie) }}
+
+                    {% if not form.vars.valid %}
+                        <div class="alert alert-danger">
+                            Le formulaire contient des erreurs. Vérifiez les différentes rubriques.                  
+                        </div>
+                    {% endif %}
+                    
+                    <div class="form-group text-center">
+                    <button class=" button btn btn-info btn-lg btn-block">
+                    {{ button_label|default('Sauvegarder') }}
+                </button>
+        </div>
+        
+                    {{ form_end(form) }}
+            </div>
+            </div>
+            
+            
+            {% for flashError in app.flashes('error') %} 
+            <div class="alert alert-danger"> 
+            {{ flashError }}
+            </div> 
+            {% endfor %}
+            </div>
+        <style>
+            h1{
+    font-family: Bodoni, serif;
+    letter-spacing: 0.05em;
+    font-size: 2.5em;
+    font-style: italic;
+    color: #cd9700;
+    /* margin-left:6em; */
+    text-align:center;
+    /* margin-bottom:-3em;; */
+    
+
+}
+    .container{
+    border:none;
+    border-radius: none;
+    background-color: #F9F9FA;
+    color: #413C49;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 30px;
+
+    
+}
+    .form-group {
+    margin: 0 auto;
+    /* max-width: 400px; */
+    
+}
+.required{
+        font-size: 30px;
+    }
+    .font{
+margin-right:10em;
+font-size: 17px;
+margin-top:20px;
+display: inline-block;
+}
+.btn-lg{
+color: #fff;
+margin-top: 30px;
+width:400px;
+}
+.button.btn-info{
+    background-color: #b18914;
+    color: #ffffff; 
+    border-color: #b18914; 
+    margin-top:10px; 
+    margin-bottom:20px;   
+}
+    </style>
+    

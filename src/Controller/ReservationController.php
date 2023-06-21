@@ -1,148 +1,198 @@
 <?php
 
 namespace App\Controller;
-
+use App\Repository\SeuilMaximumRepository;
+use App\Repository\HoraireRepository;
+use App\Entity\Reservation;
+use App\Form\ReservationType;
+use App\Repository\ReservationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-use App\Entity\Reservation;
-use App\Entity\User;
-use App\Repository\ReservationRepository;
-use Doctrine\Persistence\ManagerRegistry;
-use App\Form\ReservationType;
-
-
+#[Route('/reservation')]
 class ReservationController extends AbstractController
-{
-/** Lecture d'une reservation */
+{ 
 
-#[Route('/reservation/{id}', name: 'app_reservation')]
-public function index(ManagerRegistry $doctrine,ReservationRepository $reservationRepository, int $id): Response
-{
-    // Entity Manager de Symfony
-    $entityManager = $doctrine->getManager();
-    $reservationRepository = $entityManager->getRepository(Reservation::class);
+    #[Route('/', name: 'app_reservation_index', methods: ['GET'])]
+    public function index(ReservationRepository $reservationRepository, HoraireRepository $horaireRepository): Response
+    {  
+        $user = $this->getUser();
+        if (!$user) {
+        throw new AccessDeniedException();
+        }
+    $reservations = $reservationRepository->findBy(['user' => $user]);
 
-    // On récupère la reservation qui correspond à l'id passé dans l'url
-    $reservation = $reservationRepository->findBy(['id' => $id]);
 
-    return $this->render('reservation/index.html.twig', [
-        'controller_name' => 'ReservationController',
-        'reservation' => $reservation,
-    ]);
-}
-
-#[Route('/pageReservation', name: 'app_pageReservation'), IsGranted('ROLE_ADMIN')]
-public function pageReservation(ManagerRegistry $doctrine,ReservationRepository $reservationRepository): Response
-{
-
-     // Entity Manager de Symfony
-    $entityManager = $doctrine->getManager();
-    $reservationRepository = $entityManager->getRepository(Reservation::class);
-     // On récupère tous les articles disponibles en base de données
-    $reservations   = $reservationRepository->findAll();
-    return $this->render('reservation/pageReservation.html.twig', [
-        'reservations'  => $reservations
-    ]);
-
-}
-
-// #[Route('/pageReservationUser', name: 'app_pageReservationUser',methods:['GET'])]
-// public function pageReservationUser(ManagerRegistry $doctrine,ReservationRepository $reservationRepository): Response
-// {
-// $user=$this->getUser();
-//      // Entity Manager de Symfony
-//     $entityManager = $doctrine->getManager();
-//     $reservationRepository = $entityManager->getRepository(Reservation::class);
-//      // On récupère tous les articles disponibles en base de données
-//     $reservations = $reservationRepository->findBy(['user' => $user]);
-//     return $this->render('reservation/pageReservationUser.html.twig', [
-//         'reservations' => $reservations,
-//     ]);
-
-// }
-    /**
-   * Création / Modification d'une reservation
-   * 
-   * @param   int     $id     Identifiant de la reservation
-   * 
-   * @return Response
-   */
-    #[Route('/reservation_edit/{id}', name: 'reservation_edit')]
-    public function edit(ManagerRegistry $doctrine,ReservationRepository $reservationRepository,Request $request, int $id=null): Response
-    {
-    // Entity Manager de Symfony
-    // $user=$this->getUser();
-    $entityManager = $doctrine->getManager();
-    $reservationRepository = $entityManager->getRepository(Reservation::class);
-    // Si un identifiant est présent dans l'url alors il s'agit d'une modification
-    // Dans le cas contraire il s'agit d'une création dune reservation
-    if($id) {
-        $mode = 'update';
-        // On récupère la reservation qui correspond à l'id passé dans l'url
-        $reservation = $reservationRepository->findBy(['id' => $id])[0];
-    }
-    else {
-        $mode = 'new';
-        $user=$this->getUser();
-        $reservation = new Reservation();
-        //   $reservation->setUser($user);
+        return $this->render('reservation/index.html.twig', [
+        'reservations' => $reservationRepository->findAll(),
+        // 'reservations' => $reservations,
+        'horaires' => $horaireRepository->findAll(),
     
+        ]);
+    
+        
     }
 
-    // $categories =  $entityManager->getRepository(Category::class)->findAll();
+private $seuilMaximum = null;
+#[Route('/new', name: 'app_reservation_new', methods: ['GET', 'POST'])]
+public function new(Request $request, ReservationRepository $reservationRepository, HoraireRepository $horaireRepository, SeuilMaximumRepository $seuilMaximumRepository): Response
+{
+    $reservation = new Reservation();
+
+    $user = $this->getUser();
+    if ($user) {
+        $nom = $user->getNom();
+        $prenom = $user->getPrenom();
+        $email = $user->getEmail();
+        $allergie = $user->getAllergie();
+
+        $reservation->setNom($nom);
+        $reservation->setPrenom($prenom);
+        $reservation->setEmail($email);
+        $reservation->setAllergie($allergie);
+    }
+
     $form = $this->createForm(ReservationType::class, $reservation);
     $form->handleRequest($request);
 
-    if($form->isSubmitted() && $form->isValid()) {
-    $this->saveReservation($reservation,$doctrine, $mode);
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Récupérer la valeur du champ 'date' du formulaire
+        $reservationDate = $form->get('date')->getData();
 
-    return $this->redirectToRoute('app_pageReservation', array('id' => $reservation->getId()));
-    
+        // Récupérer le seuil maximal depuis l'entité SeuilMaximum
+        $seuilMaximum = $seuilMaximumRepository->find(2);
+
+        // Vérifier si le nombre de couverts dépasse le seuil maximal
+        $nombreCouvert = $reservation->getNombreCouvert();
+        if ($nombreCouvert < $seuilMaximum->getSeuilMaximum()) {
+            // Vérifier s'il y a des réservations existantes pour la date spécifiée
+            $existingReservations = $reservationRepository->findBy([
+                'date' => $reservationDate,
+            ]);
+
+            // Calculer la somme des nombres de personnes pour les réservations existantes
+            $totalReservedPeople = 0;
+            foreach ($existingReservations as $existingReservation) {
+                $totalReservedPeople += $existingReservation->getNombreCouvert();
+            }
+
+            // Comparer la somme des nombres de personnes réservées avec le seuil maximal
+            if ($totalReservedPeople + $nombreCouvert <= $seuilMaximum->getSeuilMaximum()) {
+                // Il y a des places disponibles
+                $this->seuilMaximum -= $nombreCouvert;
+            } else {
+                // Afficher un message d'erreur indiquant que le restaurant est complet pour cette date et heure
+                $this->addFlash('error', "Désolé, le restaurant est complet pour cette date et cette heure.");
+                return $this->redirectToRoute('app_reservation_new');
+            }
+        } else {
+            // Afficher un message d'erreur indiquant que le nombre de couverts dépasse le seuil maximal
+            $this->addFlash('error', 'Veuillez choisir un autre créneau, le nombre de couverts dépasse le seuil maximal.');
+            return $this->redirectToRoute('app_reservation_new');
+        }
+
+        // Enregistrer la réservation dans la base de données
+        $reservationRepository->save($reservation, true);
+
+        return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    $parameters = array(
-            'form'      => $form->createView(),
-            'reservation'   => $reservation,
-            'mode'      => $mode
-        );
-    return $this->render('reservation/edit.html.twig', $parameters);
+    return $this->renderForm('reservation/new.html.twig', [
+        'reservation' => $reservation,
+        'form' => $form,
+        'horaires' => $horaireRepository->findAll(),
+        'seuilMaximum' => $seuilMaximumRepository->find(2)->getSeuilMaximum(),
+    ]);
+}
+    #[Route('/{id}/show', name: 'app_reservation_show', methods: ['GET'])]
+    public function show(Reservation $reservation,HoraireRepository $horaireRepository): Response
+    { 
+        
+        return $this->render('reservation/show.html.twig', [
+            'reservation' => $reservation,
+            'horaires' => $horaireRepository->findAll(),
+            
+        ]);
     }
 
-
-
-    #[Route('/save_reservation/{id}', name: 'save_reservation')]
-    private function saveReservation(Reservation $reservation,ManagerRegistry $doctrine, string $mode){
-        $entityManager = $doctrine->getManager();
-        $entityManager->persist($reservation);
-        $entityManager->flush();
-        $this->addFlash('success', 'Enregistré avec succès');
-    }
-
-    /**
-     * Création / Modification d'une reservation
-     * 
-     * @param   int     
-     * 
-     * @return Response
-     */
-    #[Route('/remove_reservation/{id}', name: 'remove_reservation')]
-    public function remove(ManagerRegistry $doctrine,ReservationRepository $reservationRepository,Reservation $reservation,int $id): Response
+    #[Route('/{id}/edit', name: 'app_reservation_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Reservation $reservation, ReservationRepository $reservationRepository,HoraireRepository $horaireRepository, SeuilMaximumRepository $seuilMaximumRepository): Response
     {
-        /// Entity Manager de Symfony
-        $entityManager = $doctrine->getManager();
-        $reservationRepository = $entityManager->getRepository(Reservation::class);
-        // On récupère la reservation qui correspond à l'id passé dans l'URL
-        $reservation =   $reservationRepository ->findBy(['id' => $id])[0];
+        $form = $this->createForm(ReservationType::class, $reservation);
+        $form->handleRequest($request);
 
-        // La reservation est supprimé
-        $entityManager->remove($reservation);
-        $entityManager->flush();
+        // if ($form->isSubmitted() && $form->isValid()) {
+        //     $reservationRepository->save($reservation, true);
 
-        return $this->redirectToRoute('app_pageReservation');
+        //     return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
+        // }
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Récupérer la valeur du champ 'date' du formulaire
+            $reservationDate = $form->get('date')->getData();
+    
+            // Récupérer le seuil maximal depuis l'entité SeuilMaximum
+            $seuilMaximum = $seuilMaximumRepository->find(2);
+    
+            // Vérifier si le nombre de couverts dépasse le seuil maximal
+            $nombreCouvert = $reservation->getNombreCouvert();
+            if ($nombreCouvert < $seuilMaximum->getSeuilMaximum()) {
+                // Vérifier s'il y a des réservations existantes pour la date spécifiée
+                $existingReservations = $reservationRepository->findBy([
+                    'date' => $reservationDate,
+                ]);
+    
+                // Calculer la somme des nombres de personnes pour les réservations existantes
+                $totalReservedPeople = 0;
+                foreach ($existingReservations as $existingReservation) {
+                    $totalReservedPeople += $existingReservation->getNombreCouvert();
+                }
+    
+                // Comparer la somme des nombres de personnes réservées avec le seuil maximal
+                if ($totalReservedPeople + $nombreCouvert <= $seuilMaximum->getSeuilMaximum()) {
+                    // Il y a des places disponibles
+                    $this->seuilMaximum -= $nombreCouvert;
+                } else {
+                    // Afficher un message d'erreur indiquant que le restaurant est complet pour cette date et heure
+                    $this->addFlash('error', "Désolé, le restaurant est complet pour cette date et cette heure.");
+                    return $this->redirectToRoute('app_reservation_new');
+                }
+            } else {
+                // Afficher un message d'erreur indiquant que le nombre de couverts dépasse le seuil maximal
+                $this->addFlash('error', 'Veuillez choisir un autre créneau, le nombre de couverts dépasse le seuil maximal.');
+                return $this->redirectToRoute('app_reservation_new');
+            }
+    
+            // Enregistrer la réservation dans la base de données
+            $reservationRepository->save($reservation, true);
+    
+            return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('reservation/edit.html.twig', [
+            'reservation' => $reservation,
+            'form' => $form,
+            'horaires' => $horaireRepository->findAll(),
+            'seuilMaximum' => $seuilMaximumRepository->find(2)->getSeuilMaximum(),
+        ]);
+    }
+
+    #[Route('/{id}', name: 'app_reservation_delete', methods: ['POST'])]
+    public function delete(Request $request, Reservation $reservation, ReservationRepository $reservationRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$reservation->getId(), $request->request->get('_token'))) {
+            $reservationRepository->remove($reservation, true);
+        }
+
+        return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
+    }
+    public function getHoraire(HoraireRepository $horaireRepository): Response
+    {
+        return $this->render('base.html.twig', [
+            'horaires' => $horaireRepository->findAll(),
+        ]);
     }
     
     

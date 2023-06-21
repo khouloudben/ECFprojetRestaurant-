@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block content %}
+<div class="container">
+<a href="{{ path('app_user_index') }}"><p class="retour";> < retour <p></a>
+    <h2>Informations de notre client</h2>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ user.id }}</td>
+            </tr>
+            {# <tr>
+                <th>Roles</th>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+            </tr> #}
+            <tr>
+                <th>Nom</th>
+                <td>{{ user.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prénom</th>
+                <td>{{ user.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Numéro téléphone</th>
+                <td>{{ user.numtel }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ user.adresse }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            {# <tr>
+                <th>Password</th>
+                <td>{{ user.password }}</td>
+            </tr> #}
+            {# <tr>
+                <th>Confirmpassword</th>
+                <td>{{ user.confirmpassword }}</td>
+            </tr> #}
+            <tr>
+                <th>Allergie</th>
+                <td>{{ user.allergie }}</td>
+            </tr>
+        </tbody>
+    </table>
+{{ include('user/_delete_form.html.twig') }}
+</div>
+<style>
+.table{
+background-color:#f5f5f5;
+}
+h2{
+    font-family: Bodoni, serif;
+    letter-spacing: .05em;
+    font-size: 2em;
+    margin-bottom: 1em;
+    font-style: italic;
+    color: #cd9700;
+    font-weight: 400;
+    text-align: center;
+}
+.container{
+    max-width: 80%;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #F9F9FA;
+    color: #413C49;
+    margin-top:10px;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+
+} 
+.retour{
+    color: #6b6b6b;
+    
+}
+.center-btn {
+display: block;
+margin: 0 auto;
+}
+</style>
+{% endblock %}

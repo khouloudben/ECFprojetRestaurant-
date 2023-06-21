@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit SeuilMaximum{% endblock %}
+
+{% block content %}
+<div class="container">
+<a href="{{ path('app_seuil_maximum_index') }}"><p class="retour">< retour <P></a>
+    <h1>Modifier le seuil maximum</h1>
+        <div class="center"
+    {{ include('seuil_maximum/_form.html.twig', {'button_label': 'Mise à jour'}) }}
+</div>
+</div>
+<style>
+   .center{
+        text-align:center;
+    }
+    h1{
+        text-align:center;
+    }
+    .ma-classe{
+        width:400px;
+    }
+    .container{
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #F9F9FA;
+    color: #413C49;
+    margin-top: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 130px;
+
+    
+
+    
+} 
+.retour{
+    color: #6b6b6b;
+}
+.btn-lg{
+color: #fff;
+margin-top: 30px;
+width:400px;
+
+}
+.button.btn-info{
+    background-color: #b18914;
+    color: #ffffff; 
+    border-color: #b18914; 
+    margin-top:10px; 
+    margin-bottom:20px;   
+    display: block;
+    margin: 0 auto;
+    margin-top:10px;
+
+}
+.form-group {
+    margin: 0 auto;
+
+}
+</style>
+{% endblock %}

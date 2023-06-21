@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New SeuilMaximum{% endblock %}
+
+{% block content %}
+    <h1>Create new SeuilMaximum</h1>
+
+    {{ include('seuil_maximum/_form.html.twig') }}
+
+    <a href="{{ path('app_seuil_maximum_index') }}">back to list</a>
+{% endblock %}

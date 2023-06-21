@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-
+use App\Repository\HoraireRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,7 +20,7 @@ class PlatController extends AbstractController
 /** Lecture d'un plat */
 
 #[Route('/plat/{id}', name: 'app_plat'), IsGranted('ROLE_ADMIN')]
-public function index(ManagerRegistry $doctrine,PlatRepository $platRepository, int $id): Response
+public function index(ManagerRegistry $doctrine,PlatRepository $platRepository, int $id,HoraireRepository $horaireRepository): Response
 {
     // Entity Manager de Symfony
     $entityManager = $doctrine->getManager();
@@ -32,11 +32,12 @@ public function index(ManagerRegistry $doctrine,PlatRepository $platRepository, 
     return $this->render('plat/index.html.twig', [
         'controller_name' => 'PlatController',
         'plat' => $plat,
+        'horaires' => $horaireRepository->findAll(),
     ]);
 }
 
 #[Route('/listePlat', name: 'app_listeplat')]
-public function listePlat(ManagerRegistry $doctrine,PlatRepository $platRepository): Response
+public function listePlat(ManagerRegistry $doctrine,PlatRepository $platRepository,HoraireRepository $horaireRepository): Response
 {
 
      // Entity Manager de Symfony
@@ -45,7 +46,8 @@ public function listePlat(ManagerRegistry $doctrine,PlatRepository $platReposito
      // On récupère tous les articles disponibles en base de données
     $plats   = $platRepository->findAll();
     return $this->render('plat/listePlat.html.twig', [
-        'plats'  => $plats
+        'plats'  => $plats,
+        'horaires' => $horaireRepository->findAll(),
     ]);
 
 }
@@ -58,7 +60,7 @@ public function listePlat(ManagerRegistry $doctrine,PlatRepository $platReposito
    * @return Response
    */
     #[Route('/plat_edit/{id}', name: 'plat_edit')]
-    public function edit(ManagerRegistry $doctrine,PlatRepository $platRepository,Request $request, int $id=null): Response
+    public function edit(ManagerRegistry $doctrine,PlatRepository $platRepository,HoraireRepository $horaireRepository,Request $request, int $id=null): Response
     {
     // Entity Manager de Symfony
     $entityManager = $doctrine->getManager();
@@ -81,14 +83,15 @@ public function listePlat(ManagerRegistry $doctrine,PlatRepository $platReposito
 
     if($form->isSubmitted() && $form->isValid()) {
     $this->savePlat($plat,$doctrine, $mode,);
-
+    
     return $this->redirectToRoute('app_listeplat', array('id' => $plat->getId()));
     }
 
     $parameters = array(
             'form'      => $form->createView(),
             'plat'   => $plat,
-            'mode'      => $mode
+            'mode'      => $mode,
+            'horaires' => $horaireRepository->findAll(),
         );
 
     return $this->render('plat/edit.html.twig', $parameters);

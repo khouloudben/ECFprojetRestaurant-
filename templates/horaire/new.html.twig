@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Horaires{% endblock %}
+
+{% block content %}
+<div class="container">
+<a href="{{ path('app_horaire_index') }}"> <p class="retour ";>< retour<p></a>
+<h1>Horaires d'ouvertures</h1>
+{{ include('horaire/_form.html.twig') }}
+
+</div>   
+<style>
+            h1{
+                margin-top:10px;
+            }
+            .container{
+            max-width: 800px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #F9F9FA;
+            color: #413C49;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 5px;
+        
+            
+        } 
+        .retour{
+        
+            color: #6b6b6b;
+        }
+</style>
+{% endblock %}

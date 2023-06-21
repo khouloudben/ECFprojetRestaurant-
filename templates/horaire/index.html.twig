@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Horaires index{% endblock %}
+
+{% block content  %}
+<div class="row alert alert-warning" role="alert">
+<div class="col-xs-9 col-sm-10"></div>
+<div class="col-xs-3 col-sm-2">
+    <a href="{{ path('app_horaire_new') }}"role="button" class="btn btn-info text-right"style="background-color: #b18914; color: #ffffff; border-color:  #b18914;">
+            <i class="fa fa-plus fa-fw"></i>
+            💡Changer les Horaires            
+        </a>
+</div>
+</div>
+<div class="container">
+    <h2>Horaires d'ouvertures </h2>
+
+        <table class="table">
+        <thead>
+            <tr>
+                <th>N°</th>
+                <th>Premier jour de la semaine</th>
+                <th>Dernier jour de la semaine</th>
+                <th>Heure du matin</th>
+                <th>Heure du soire</th>
+                <th>Jour</th>
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% set z = 1 %}
+        {% for horaire in horaires %}
+        <tr>
+        <th scope="row">
+        {{z}}
+        </th>
+        <td>{{ horaire.premierjour }}</td>
+        <td>{{ horaire.dernierjour }}</td>
+        <td>{{ horaire.heureOuvertureMatin ? horaire.heureOuvertureMatin|date('H:i:s') : '' }}</td>
+        <td>{{ horaire.heureFerMatin ? horaire.heureFerMatin|date('H:i:s') : '' }}</td>
+        <td>{{ horaire.heureOuvertureSoire ? horaire.heureOuvertureSoire|date('H:i:s') : '' }}</td>
+        <td>{{ horaire.heureFerSoire ? horaire.heureFerSoire|date('H:i:s') : '' }}</td>
+        <td>{{ horaire.jour }}</td>
+        <td>{{ horaire.description }}</td>
+        <td>
+        <a href="{{ path('app_horaire_show', {'id': horaire.id}) }}"role="button" class="btn btn-info text-right"style="background-color: #b18914; color: #ffffff; border-color:  #b18914; width: 100px;">Visualiser</a><br>
+        <a href="{{ path('app_horaire_edit', {'id': horaire.id}) }}"role="button" class="btn btn-info text-right"style="background-color: #b18914; color: #ffffff; border-color:  #b18914; width: 100px;margin-top:10px;"> Modifier </a>
+        </td>
+        {% set z = z + 1 %}
+        </tr>
+        {% else %}
+        <tr>
+        <td colspan="5">Aucun enregistrement trouvé</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>   
+{% endblock %}
+{% block stylesheets %}
+<style>
+    .container{
+    padding-right: 0px; 
+    padding-left: 0px;
+    margin-left:20px;
+
+    }
+.table{
+    background-color:#f5f5f5;
+    width:100%;
+}
+h2{
+    font-family: Bodoni, serif;
+    letter-spacing: .05em;
+    font-size: 2em;
+    margin-bottom: 1em;
+    font-style: italic;
+    color: #cd9700;
+    font-weight: 400;
+    text-align: center;
+}
+
+</style>
+{% endblock %}
+

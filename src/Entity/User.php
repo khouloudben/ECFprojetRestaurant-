@@ -52,21 +52,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::TEXT)]
     private ?string $allergie = null;
 
-    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Menu::class, orphanRemoval: true)]
-    private Collection $menus;
-
-    #[ORM\OneToMany(mappedBy: 'reservation', targetEntity: Reservation::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Reservation::class)]
     private Collection $reservations;
-
-
-
-
 
     public function __construct()
     {
-        $this->menus = new ArrayCollection();
         $this->reservations = new ArrayCollection();
     }
+
+    // #[ORM\OneToMany(mappedBy: 'author', targetEntity: Menu::class, orphanRemoval: true)]
+    // private Collection $menus;
+
+    // #[ORM\OneToMany(mappedBy: 'reservation', targetEntity: Reservation::class)]
+    // private Collection $reservations;
+
+
+
+
+
+    // public function __construct()
+    // {
+    //     $this->menus = new ArrayCollection();
+    //     $this->reservations = new ArrayCollection();
+    // }
 
 
 
@@ -193,20 +201,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    
-
-
-    // public function isVerified(): bool
-    // {
-    //     return $this->isVerified;
-    // }
-
-    // public function setIsVerified(bool $isVerified): self
-    // {
-    //     $this->isVerified = $isVerified;
-
-    //     return $this;
-    // }
 
     public function getConfirmpassword(): ?string
     {
@@ -232,35 +226,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    
+
     // /**
-    //  * @return Collection<int, Menu>
+    //  * @return Collection<int, Reservation>
     //  */
-    // public function getMenus(): Collection
+    // public function getReservations(): Collection
     // {
-    //     return $this->menus;
-    // }
-
-    // public function addMenu(Menu $menu): self
-    // {
-    //     if (!$this->menus->contains($menu)) {
-    //         $this->menus->add($menu);
-    //         $menu->setAuthor($this);
-    //     }
-
-    //     return $this;
-    // }
-
-    // public function removeMenu(Menu $menu): self
-    // {
-    //     if ($this->menus->removeElement($menu)) {
-    //         // set the owning side to null (unless already changed)
-    //         if ($menu->getAuthor() === $this) {
-    //             $menu->setAuthor(null);
-    //         }
-    //     }
-
-    //     return $this;
-    // }
+    //     return $this->reservations;
+    // }   
 
     /**
      * @return Collection<int, Reservation>
@@ -274,7 +248,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->reservations->contains($reservation)) {
             $this->reservations->add($reservation);
-            $reservation->setReservation($this);
+            $reservation->setUser($this);
         }
 
         return $this;
@@ -284,14 +258,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->reservations->removeElement($reservation)) {
             // set the owning side to null (unless already changed)
-            if ($reservation->getReservation() === $this) {
-                $reservation->setReservation(null);
+            if ($reservation->getUser() === $this) {
+                $reservation->setUser(null);
             }
         }
 
         return $this;
     }
-
-    
 
 }

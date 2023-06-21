@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Modifparagraphe;
 use App\Form\ModifparagrapheType;
 use App\Repository\ModifparagrapheRepository;
+use App\Repository\HoraireRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,15 +15,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class ModifparagrapheController extends AbstractController
 {
     #[Route('/modifparagraphe', name: 'app_modifparagraphe_index', methods: ['GET'])]
-    public function index(ModifparagrapheRepository $modifparagrapheRepository): Response
+    public function index(ModifparagrapheRepository $modifparagrapheRepository,HoraireRepository $horaireRepository): Response
     {
         return $this->render('modifparagraphe/index.html.twig', [
             'modifparagraphes' => $modifparagrapheRepository->findAll(),
+            'horaires' => $horaireRepository->findAll(),
         ]);
     }
 
     #[Route('/newmodifparagraphe', name: 'app_modifparagraphe_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ModifparagrapheRepository $modifparagrapheRepository): Response
+    public function new(Request $request, ModifparagrapheRepository $modifparagrapheRepository,HoraireRepository $horaireRepository): Response
     {
         $modifparagraphe = new Modifparagraphe();
         $form = $this->createForm(ModifparagrapheType::class, $modifparagraphe);
@@ -37,19 +39,21 @@ class ModifparagrapheController extends AbstractController
         return $this->renderForm('modifparagraphe/new.html.twig', [
             'modifparagraphe' => $modifparagraphe,
             'form' => $form,
+            'horaires' => $horaireRepository->findAll(),
         ]);
     }
 
     #[Route('/{id}', name: 'app_modifparagraphe_show', methods: ['GET'])]
-    public function show(Modifparagraphe $modifparagraphe): Response
+    public function show(Modifparagraphe $modifparagraphe,HoraireRepository $horaireRepository): Response
     {
         return $this->render('modifparagraphe/show.html.twig', [
             'modifparagraphe' => $modifparagraphe,
+            'horaires' => $horaireRepository->findAll(),
         ]);
     }
 
     #[Route('/{id}/editmodifparagraphe', name: 'app_modifparagraphe_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Modifparagraphe $modifparagraphe, ModifparagrapheRepository $modifparagrapheRepository): Response
+    public function edit(Request $request, Modifparagraphe $modifparagraphe, ModifparagrapheRepository $modifparagrapheRepository,HoraireRepository $horaireRepository): Response
     {
         $form = $this->createForm(ModifparagrapheType::class, $modifparagraphe);
         $form->handleRequest($request);
@@ -63,6 +67,7 @@ class ModifparagrapheController extends AbstractController
         return $this->renderForm('modifparagraphe/edit.html.twig', [
             'modifparagraphe' => $modifparagraphe,
             'form' => $form,
+            'horaires' => $horaireRepository->findAll(),
         ]);
     }
 

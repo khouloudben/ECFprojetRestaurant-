@@ -41,6 +41,7 @@ Modifier
     <p class="paragraphe">{{ modifparagraphe.paragraphe }}</p>
 {% endif %}
 {% endfor %}
+
 </div>
 
 
@@ -58,7 +59,30 @@ Modifier
 <img id="img_list" class="imagePlat" src="{{ vich_uploader_asset(image, 'imageFile') }}"  width="280" height="380" alt="{{ image.imageName }}">
 {% endfor %}
 <br>
-<a href="{{ path('reservation_edit') }}"role="button" class="btn btn-info text-right"style="background-color: #b18914; color: #ffffff; border-color:  #b18914; width: 170px;margin-top:3em;margin-bottom:3em;margin-left:45%;text-align: center;">Réservez votre table</a>
+<a href="{{ path('app_reservation_new') }}"role="button" class="btn btn-info text-right"style="background-color: #b18914; color: #ffffff; border-color:  #b18914; width: 170px;margin-top:3em;margin-bottom:3em;margin-left:45%;text-align: center;">Réservez votre table</a>
+
+
+{# <div class="element-specifique">
+<div class="container">      
+
+{% set last_id = horaires|last.id %} 
+{% for horaire in horaires %} 
+{% if horaire.id == last_id %}
+<p class="horaire">Ouvert de {{ horaire.premierjour }} à {{ horaire.dernierjour }} le midi de {{ horaire.heureOuvertureMatin|format_hour}} à {{ horaire.heureFerMatin|format_hour}} et le soir de {{ horaire.heureOuvertureSoire|format_hour}} à {{horaire.heureFerSoire|format_hour}}.</p>
+<P class="horaire"> {{ horaire.jour }} est {{ horaire.description }}.</p>
+{% endif %}
+{% endfor %}
+</div>
+    {% if is_granted('ROLE_ADMIN') %}
+    <button class="bouton">
+    <a href="{{ path('app_horaire_new') }}"role="button"  class="btn "style=" color: #b18914;">
+    <i ></i>
+    Modifier          
+    </a>
+    </button>
+    {% endif %}
+    
+</div>  #}
 
 <style>
 .logo{

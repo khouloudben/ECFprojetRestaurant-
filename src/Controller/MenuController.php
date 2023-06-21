@@ -1,13 +1,13 @@
 <?php
 namespace App\Controller;
-
+use App\Repository\HoraireRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 use App\Entity\Menu;
-use App\Entity\Category;
+
 use App\Repository\MenuRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Form\MenuType;
@@ -18,7 +18,7 @@ class MenuController extends AbstractController
 /** Lecture d'un menu */
 
 #[Route('/menu/{id}', name: 'app_menu')]
-public function index(ManagerRegistry $doctrine,MenuRepository $menuRepository, int $id): Response
+public function index(ManagerRegistry $doctrine,MenuRepository $menuRepository, int $id,HoraireRepository $horaireRepository): Response
 {
     // Entity Manager de Symfony
     $entityManager = $doctrine->getManager();
@@ -30,11 +30,12 @@ public function index(ManagerRegistry $doctrine,MenuRepository $menuRepository, 
     return $this->render('menu/index.html.twig', [
         'controller_name' => 'MenuController',
         'menu' => $menu,
+        'horaires' => $horaireRepository->findAll(),
     ]);
 }
 
 #[Route('/MenuS', name: 'app_MenuS')]
-public function MenuS(ManagerRegistry $doctrine,MenuRepository $menuRepository): Response
+public function MenuS(ManagerRegistry $doctrine,MenuRepository $menuRepository,HoraireRepository $horaireRepository): Response
 {
 
      // Entity Manager de Symfony
@@ -43,7 +44,8 @@ public function MenuS(ManagerRegistry $doctrine,MenuRepository $menuRepository):
      // On récupère tous les articles disponibles en base de données
     $menus   = $menuRepository->findAll();
     return $this->render('menu/MenuS.html.twig', [
-        'menus'  => $menus
+        'menus'  => $menus,
+        'horaires' => $horaireRepository->findAll(),
     ]);
 
 }
@@ -55,7 +57,7 @@ public function MenuS(ManagerRegistry $doctrine,MenuRepository $menuRepository):
    * @return Response
    */
     #[Route('/menu_edit/{id}', name: 'menu_edit')]
-    public function edit(ManagerRegistry $doctrine,MenuRepository $menuRepository,Request $request, int $id=null): Response
+    public function edit(ManagerRegistry $doctrine,MenuRepository $menuRepository,HoraireRepository $horaireRepository,Request $request, int $id=null): Response
     {
     // Entity Manager de Symfony
     $entityManager = $doctrine->getManager();
@@ -85,11 +87,16 @@ public function MenuS(ManagerRegistry $doctrine,MenuRepository $menuRepository):
     $parameters = array(
             'form'      => $form->createView(),
             'menu'   => $menu,
-            'mode'      => $mode
+            'mode'      => $mode,
+            'horaires' => $horaireRepository->findAll(),
+            
         );
 
-    return $this->render('menu/edit.html.twig', $parameters);
+    return $this->render('menu/edit.html.twig', $parameters)
+    ;
+
     }
+    
     #[Route('/save_menu/{id}', name: 'save_menu')]
     private function saveMenu(Menu $menu,ManagerRegistry $doctrine, string $mode){
         // $menu = $this->completeMenuBeforeSave($menu, $mode);
@@ -107,7 +114,7 @@ public function MenuS(ManagerRegistry $doctrine,MenuRepository $menuRepository):
      * @return Response
      */
     #[Route('/remove_menu/{id}', name: 'remove_menu')]
-    public function remove(ManagerRegistry $doctrine,MenuRepository $menuRepository,int $id): Response
+    public function remove(ManagerRegistry $doctrine,MenuRepository $menuRepository,Menu $menu ,int $id): Response
     {
         /// Entity Manager de Symfony
         $entityManager = $doctrine->getManager();
@@ -141,7 +148,13 @@ public function MenuS(ManagerRegistry $doctrine,MenuRepository $menuRepository):
 
     //     return $plat;
     // }
-
+ /**
+     * Enregistrer un plat en base de données
+     * 
+     * @param   Menu     $menu
+     * @param   string      $mode 
+     */
+    
     
 }
 

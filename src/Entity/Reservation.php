@@ -3,9 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\ReservationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\User;
 
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
 class Reservation
@@ -18,22 +19,30 @@ class Reservation
     #[ORM\Column(length: 255)]
     private ?string $nombreCouvert = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $heure = null;
 
     #[ORM\Column(length: 255)]
     private ?string $allergie = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $user = null;
-
     #[ORM\ManyToOne(inversedBy: 'reservations')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $reservation = null;
+    private ?User $user = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $nom = null;
+
+
+
+    #[ORM\Column(length: 255)]
+    private ?string $email = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $prenom = null;
+    
+    // #[ORM\JoinColumn(name: "user_id", referencedColumnName: "id", onDelete: "CASCADE")]
 
     public function getId(): ?int
     {
@@ -57,7 +66,7 @@ class Reservation
         return $this->date;
     }
 
-    public function setDate(?\DateTimeInterface $date): self
+    public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
 
@@ -69,12 +78,14 @@ class Reservation
         return $this->heure;
     }
 
-    public function setHeure(?\DateTimeInterface $heure): self
+    public function setHeure(\DateTimeInterface $heure): self
     {
         $this->heure = $heure;
 
         return $this;
     }
+
+    
 
     public function getAllergie(): ?string
     {
@@ -88,29 +99,54 @@ class Reservation
         return $this;
     }
 
-    public function getUser(): ?string
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(string $user): self
+    public function setUser(?User $user): self
     {
         $this->user = $user;
 
         return $this;
     }
 
-    public function getReservation(): ?User
+    public function getNom(): ?string
     {
-        return $this->reservation;
+        return $this->nom;
     }
 
-    public function setReservation(?User $reservation): self
+    public function setNom(string $nom): self
     {
-        $this->reservation = $reservation;
+        $this->nom = $nom;
 
         return $this;
     }
 
 
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): self
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+    
 }

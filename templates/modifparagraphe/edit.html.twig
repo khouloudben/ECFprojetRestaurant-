@@ -4,9 +4,10 @@
 
 {% block content %}
 <div class="container">
+<a href="{{ path('app_modifparagraphe_index') }}"><p class="retour">< retour<p></a>
 <div >
     <h1>Modifier la paragraphe</h1>
-    <a href="{{ path('app_modifparagraphe_index') }}"><p class="retour">< retour à la liste<p></a>
+    
 
     {{ include('modifparagraphe/_form.html.twig', {'button_label': 'Mise à jour'}) }}
     {{ include('modifparagraphe/_delete_form.html.twig') }}
@@ -32,8 +33,6 @@
 } 
 .retour{
     color: #6b6b6b;
-    position: absolute;
-    margin-top: -40em;
 }
 </style>
 {% endblock %}

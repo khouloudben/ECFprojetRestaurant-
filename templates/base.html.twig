@@ -19,7 +19,7 @@
 
                 {% if app.user %}
                 <li class="nav-item">
-                    <span class="nav-link">Bienvenue {{ app.user.nom }}!</span>
+                    <span class="nav-link" style="color: #cd9700;">Bienvenue {{ app.user.nom }}!</span>
                 </li>
                 {% endif %}
 
@@ -35,27 +35,42 @@
                 <li class="nav-item {{ app.request.get('_route') == 'accueil' ? 'active' : '' }}">
                 <a class="nav-link" href="{{ path('app_listeplat') }}">Liste des plats</a>
                 </li>
-                
+            
                 {% if is_granted('ROLE_ADMIN') %}
                 <li class="nav-item {{ app.request.get('_route') == 'accueil' ? 'active' : '' }}">
                 <a class="nav-link" href="{{ path('app_images_index') }}">Galerie d’images</a>
-                {% else %}
-                <a class="nav-link" href="#img_list">Galerie d’images</a>
-                {% endif %}
                 </li>
                 
+                {% else %} 
+            
                 <li class="nav-item {{ app.request.get('_route') == 'accueil' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ path('reservation_edit') }}">Réserver</a>
+                <a class="nav-link" href="#img_list">Galerie d’images</a>
                 </li>
-                {% if app.user %}
-                {% if is_granted('ROLE_ADMIN') %}
+                {% endif  %}
+                
                 <li class="nav-item {{ app.request.get('_route') == 'accueil' ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ path('app_pageReservation') }}">Les réservations</a>
-                    {% else %}
-                    <a class="nav-link" href="{{ path('app_pageReservation') }}">Mes réservations</a>
+                <a class="nav-link" href="{{ path('app_reservation_new') }}">Réserver</a>
                 </li>
+                {% if app.user %} 
+                {% if is_granted('ROLE_ADMIN') %} 
+                <li class="nav-item {{ app.request.get('_route') == 'accueil' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ path('app_reservation_index') }}">Les réservations</a> 
+                    {% else %} 
+                    {# {% set set reservations = app.user.reservations %} 
+                    {% if reservation == app.user.reservations %} #}
+                    <a class="nav-link" href="{{ path('app_reservation_index') }}">Mes réservations</a>
+                    {# {% endif %} #}
+                </li> 
                 {% endif %}
                 {% endif %}
+                {% if is_granted('ROLE_USER') %}
+                <li class="nav-item {{ app.request.get('_route') == 'accueil' ? 'active' : '' }}">
+                <a class="nav-link" href="{{ path('app_seuil_maximum_index') }}">Seuil maximum</a>
+                </li>
+                <li class="nav-item {{ app.request.get('_route') == 'accueil' ? 'active' : '' }}">
+                <a class="nav-link" href="{{ path('app_user_index') }}">Nos clients</a>
+                </li>
+                {% endif  %}
 
                 {% if app.user %}
                 <li class="nav-item">
@@ -68,8 +83,8 @@
                 {% endif %}
                 
                 {% if not app.user %}
-                <li class="nav-item {{ app.request.get('_route') == 'app_register' ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ path('app_register') }}">Inscription</a>
+                <li class=" nav-item {{ app.request.get('_route') == 'app_register' ? 'active' : '' }}">
+                    <a class=" nav-link" href="{{ path('app_register') }}">Inscription</a>
                 </li> 
                 {% endif %}
             </ul>
@@ -86,8 +101,33 @@
                     </div>
                     <div class="p">
                         <strong>107 Quai des États-Unis<br> 06300 Nice</strong>
-                        <br>Ouvert du Mardi au Dimanche de 12h00 à 14h30<br>
-                        et de 19h00 à 22h30<br>Tel : <strong><a style="font-family: playfair display; font-size: 18px; color: #343a40;" href="tel:+33144900295">01 00 00 00 00</a></strong>
+ <div class="element-specifique">
+<div class="cont">      
+
+{% set last_id = horaires|last.id %} 
+{% for horaire in horaires %} 
+ {% if horaire.id == last_id %}
+ <p class="horaire">Ouvert de {{ horaire.premierjour }} à {{ horaire.dernierjour }} le midi de {{ horaire.heureOuvertureMatin|format_hour}} à {{ horaire.heureFerMatin|format_hour}} et le soir de {{ horaire.heureOuvertureSoire|format_hour}} à {{horaire.heureFerSoire|format_hour}}.</p>
+<P class="horaire"> {{ horaire.jour }} est {{ horaire.description }}.</p>
+{% endif %}
+{% endfor %}
+</div>
+
+
+    {% if is_granted('ROLE_ADMIN') %}
+    <button class="bouton">
+    <a href="{{ path('app_horaire_new') }}"role="button"  class="btn "style=" color: #b18914;">
+    <i ></i>
+    Modifier          
+    </a>
+    </button>
+    {% endif %}
+    
+</div> 
+                        {# <br>Ouvert du Mardi au Dimanche de 12h00 à 14h30<br>
+                        et de 19h00 à 22h30<br> #}
+                            Tel : <strong>
+                        <a style="font-family: playfair display; font-size: 18px; color: #343a40;" href="tel:+33144900295">01 00 00 00 00</a></strong>
                         <br>Email: <strong><a style="font-family: playfair display; font-size: 18px; color: #343a40;text-align: center; " href="email: contact@laVueDor.com"> contact@laVueDor.com</a></strong>
                     </p>
                     </div>
@@ -107,6 +147,8 @@
 </html>
 
 <style>
+
+
 .image-sombre{
 width: 20%;
 margin-top: -23px; 
@@ -131,5 +173,15 @@ text-align: center;
     font-size: 1em;
 
 }
-
+.bouton {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        visibility: hidden;
+        border:lightgray ;
+    }
+.nav-link{
+    white-space: nowrap;
+}
 </style>
